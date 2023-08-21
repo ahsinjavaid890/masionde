@@ -21,7 +21,7 @@ use App\Http\Controllers\CustomLoginController;
 |
 */
 
-Auth::routes(['verify' => true]);
+Auth::routes();
 Route::name('user.')->prefix('user')->group(function(){
     Route::get('/dashboard',[HomeController::class, 'dashboard'])->name('dashboard');
     
