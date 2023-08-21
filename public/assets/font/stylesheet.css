@@ -1,0 +1,192 @@
+@font-face {
+    font-family: 'BR Candor Extra';
+    src: url('BRCandor-ExtraLight.eot');
+    src: local('BR Candor Extra Light'), local('BRCandor-ExtraLight'),
+        url('BRCandor-ExtraLight.eot?#iefix') format('embedded-opentype'),
+        url('BRCandor-ExtraLight.woff2') format('woff2'),
+        url('BRCandor-ExtraLight.woff') format('woff'),
+        url('BRCandor-ExtraLight.ttf') format('truetype');
+    font-weight: 200;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'BR Candor Extra';
+    src: url('BRCandor-ExtraLightItalic.eot');
+    src: local('BR Candor Extra Light Italic'), local('BRCandor-ExtraLightItalic'),
+        url('BRCandor-ExtraLightItalic.eot?#iefix') format('embedded-opentype'),
+        url('BRCandor-ExtraLightItalic.woff2') format('woff2'),
+        url('BRCandor-ExtraLightItalic.woff') format('woff'),
+        url('BRCandor-ExtraLightItalic.ttf') format('truetype');
+    font-weight: 200;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'BR Candor';
+    src: url('BRCandor-BlackItalic.eot');
+    src: local('BR Candor Black Italic'), local('BRCandor-BlackItalic'),
+        url('BRCandor-BlackItalic.eot?#iefix') format('embedded-opentype'),
+        url('BRCandor-BlackItalic.woff2') format('woff2'),
+        url('BRCandor-BlackItalic.woff') format('woff'),
+        url('BRCandor-BlackItalic.ttf') format('truetype');
+    font-weight: 900;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'BR Candor';
+    src: url('BRCandor-Black.eot');
+    src: local('BR Candor Black'), local('BRCandor-Black'),
+        url('BRCandor-Black.eot?#iefix') format('embedded-opentype'),
+        url('BRCandor-Black.woff2') format('woff2'),
+        url('BRCandor-Black.woff') format('woff'),
+        url('BRCandor-Black.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'BR Candor';
+    src: url('BRCandor-Bold.eot');
+    src: local('BR Candor Bold'), local('BRCandor-Bold'),
+        url('BRCandor-Bold.eot?#iefix') format('embedded-opentype'),
+        url('BRCandor-Bold.woff2') format('woff2'),
+        url('BRCandor-Bold.woff') format('woff'),
+        url('BRCandor-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'BR Candor';
+    src: url('BRCandor-BoldItalic.eot');
+    src: local('BR Candor Bold Italic'), local('BRCandor-BoldItalic'),
+        url('BRCandor-BoldItalic.eot?#iefix') format('embedded-opentype'),
+        url('BRCandor-BoldItalic.woff2') format('woff2'),
+        url('BRCandor-BoldItalic.woff') format('woff'),
+        url('BRCandor-BoldItalic.ttf') format('truetype');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'BR Candor';
+    src: url('BRCandor-Medium.eot');
+    src: local('BR Candor Medium'), local('BRCandor-Medium'),
+        url('BRCandor-Medium.eot?#iefix') format('embedded-opentype'),
+        url('BRCandor-Medium.woff2') format('woff2'),
+        url('BRCandor-Medium.woff') format('woff'),
+        url('BRCandor-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'BR Candor';
+    src: url('BRCandor-ThinItalic.eot');
+    src: local('BR Candor Thin Italic'), local('BRCandor-ThinItalic'),
+        url('BRCandor-ThinItalic.eot?#iefix') format('embedded-opentype'),
+        url('BRCandor-ThinItalic.woff2') format('woff2'),
+        url('BRCandor-ThinItalic.woff') format('woff'),
+        url('BRCandor-ThinItalic.ttf') format('truetype');
+    font-weight: 100;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'BR Candor Semi';
+    src: url('BRCandor-SemiBold.eot');
+    src: local('BR Candor Semi Bold'), local('BRCandor-SemiBold'),
+        url('BRCandor-SemiBold.eot?#iefix') format('embedded-opentype'),
+        url('BRCandor-SemiBold.woff2') format('woff2'),
+        url('BRCandor-SemiBold.woff') format('woff'),
+        url('BRCandor-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'BR Candor';
+    src: url('BRCandor-RegularItalic.eot');
+    src: local('BR Candor Italic'), local('BRCandor-RegularItalic'),
+        url('BRCandor-RegularItalic.eot?#iefix') format('embedded-opentype'),
+        url('BRCandor-RegularItalic.woff2') format('woff2'),
+        url('BRCandor-RegularItalic.woff') format('woff'),
+        url('BRCandor-RegularItalic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'BR Candor';
+    src: url('BRCandor-MediumItalic.eot');
+    src: local('BR Candor Medium Italic'), local('BRCandor-MediumItalic'),
+        url('BRCandor-MediumItalic.eot?#iefix') format('embedded-opentype'),
+        url('BRCandor-MediumItalic.woff2') format('woff2'),
+        url('BRCandor-MediumItalic.woff') format('woff'),
+        url('BRCandor-MediumItalic.ttf') format('truetype');
+    font-weight: 500;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'BR Candor';
+    src: url('BRCandor-LightItalic.eot');
+    src: local('BR Candor Light Italic'), local('BRCandor-LightItalic'),
+        url('BRCandor-LightItalic.eot?#iefix') format('embedded-opentype'),
+        url('BRCandor-LightItalic.woff2') format('woff2'),
+        url('BRCandor-LightItalic.woff') format('woff'),
+        url('BRCandor-LightItalic.ttf') format('truetype');
+    font-weight: 300;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'BR Candor';
+    src: url('BRCandor-Regular.eot');
+    src: local('BR Candor'), local('BRCandor-Regular'),
+        url('BRCandor-Regular.eot?#iefix') format('embedded-opentype'),
+        url('BRCandor-Regular.woff2') format('woff2'),
+        url('BRCandor-Regular.woff') format('woff'),
+        url('BRCandor-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'BR Candor';
+    src: url('BRCandor-Light.eot');
+    src: local('BR Candor Light'), local('BRCandor-Light'),
+        url('BRCandor-Light.eot?#iefix') format('embedded-opentype'),
+        url('BRCandor-Light.woff2') format('woff2'),
+        url('BRCandor-Light.woff') format('woff'),
+        url('BRCandor-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'BR Candor';
+    src: url('BRCandor-Thin.eot');
+    src: local('BR Candor Thin'), local('BRCandor-Thin'),
+        url('BRCandor-Thin.eot?#iefix') format('embedded-opentype'),
+        url('BRCandor-Thin.woff2') format('woff2'),
+        url('BRCandor-Thin.woff') format('woff'),
+        url('BRCandor-Thin.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'BR Candor Semi';
+    src: url('BRCandor-SemiBoldItalic.eot');
+    src: local('BR Candor Semi Bold Italic'), local('BRCandor-SemiBoldItalic'),
+        url('BRCandor-SemiBoldItalic.eot?#iefix') format('embedded-opentype'),
+        url('BRCandor-SemiBoldItalic.woff2') format('woff2'),
+        url('BRCandor-SemiBoldItalic.woff') format('woff'),
+        url('BRCandor-SemiBoldItalic.ttf') format('truetype');
+    font-weight: 600;
+    font-style: italic;
+}
+
