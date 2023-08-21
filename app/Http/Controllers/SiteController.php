@@ -18,9 +18,15 @@ class SiteController extends Controller
     {
         if(Auth::check())
         {
-            return route('user.dashboard');
+            if(Auth::user()->type == 'admin')
+            {
+                return redirect()->route('admin.dashboard');
+            }else{
+                return redirect()->route('userprofile');    
+            }
+            
         }else{
-            return view('auth.login');
+            return redirect()->route('login');  
         }
     }
 }

@@ -8,6 +8,7 @@
         <div class="d-flex flex-column-fluid">
             <!--begin::Container-->
             <div class=" container ">
+                @include('alerts.index')
                 <div class="row">
                     <div class="col-md-3">
                         <div class="row mt-3">
@@ -242,45 +243,64 @@
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
             </div>
+            <form method="POST" action="{{ url('admin/users/create') }}">
+                @csrf
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
                             <label class="lable-control">Name</label>
-                            <input type="text" class="form-control input-lg" name="name">
+                            <input value="{{old('name')}}" type="text" class="form-control input-lg"  name="name">
+                            {!!$errors->first("name", "<span class='text-danger'>:message</span>")!!}
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="lable-control">Email</label>
-                            <input type="text" class="form-control input-lg" name="email">
+                            <input value="{{old('email')}}" type="text" class="form-control input-lg"  name="email">
+                            {!!$errors->first("email", "<span class='text-danger'>:message</span>")!!}
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="lable-control">Phone number</label>
-                            <input type="text" class="form-control input-lg" name="phone-number">
+                            <input value="{{old('phonenumber')}}" type="text" class="form-control input-lg" name="phonenumber">
+                            {!!$errors->first("phonenumber", "<span class='text-danger'>:message</span>")!!}
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="lable-control">Password</label>
-                            <input type="text" class="form-control input-lg" name="password">
+                            <input type="password"  class="form-control input-lg" name="password">
+                            {!!$errors->first("password", "<span class='text-danger'>:message</span>")!!}
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="lable-control">Confirm password</label>
-                            <input type="text" class="form-control input-lg" name="password">
+                            <input type="password"  class="form-control input-lg" name="confirm_password">
+                            {!!$errors->first("confirm_password", "<span class='text-danger'>:message</span>")!!}
                         </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light text-black font-weight-bold" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary font-weight-bold">Send Invitation</button>
+                <button type="submit" class="btn btn-primary font-weight-bold">Send Invitation</button>
             </div>
+        </form>
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    
+    @if(isset($errors))
+    @if($errors->count() > 0)
+    $(document).ready(function() {
+        $('#exampleModalScrollable').modal('show')
+    });
+    @endif
+    @endif
+
+</script>
 @endsection

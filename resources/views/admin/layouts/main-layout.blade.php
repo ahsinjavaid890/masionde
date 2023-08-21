@@ -20,6 +20,7 @@
     <input type="hidden" value="{{ url('') }}" id="app_url">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="{{ url('public/images') }}/{{ Cmf::get_store_value('favicon') }}" rel="shortcut icon" />  
+    <script src="{{ asset('public/admin/assets/plugins/global/plugins.bundle.js?v=7.0.6') }}"></script>
 </head>
   <body id="kt_body" class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable page-loading">    
         @include('admin.includes.navbar')
@@ -40,7 +41,7 @@
 	    </div>        
         <!--end::Global Config-->
         <!--begin::Global Theme Bundle(used by all pages)-->
-        <script src="{{ asset('public/admin/assets/plugins/global/plugins.bundle.js?v=7.0.6') }}"></script>
+        
         <script src="{{ asset('public/admin/assets/plugins/custom/prismjs/prismjs.bundle.js?v=7.0.6') }}"></script>
         <script src="{{ asset('public/admin/assets/js/scripts.bundle.js?v=7.0.6') }}"></script>
         <!--end::Global Theme Bundle-->

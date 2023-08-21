@@ -23,19 +23,29 @@
              <div class="signin-card">
                <h2>Welcome Back,</h2>
                <p>Login to your account</p>
-               <form action="dashboard.html">
+               @if(session()->has('error'))
+                <div style="text-align: center;color: red;" id="result">{{ session()->get('error') }}</div>
+                @endif
+               <form id="loginform" action="{{ route('user.login') }}" method="POST" id="form">
+                                @csrf
                  <div class="form-group">
                   <label>eamil</label>
-                   <input type="email" class="form-control" placeholder="example@mail.com" name="">
+                   <input id="email" autocomplete="off" value="@if(session()->has('email')){{ session()->get('email') }}  @endif" type="text" class="form-control" name="email" placeholder="Your E-mail">
+                   @if($errors->has('email'))
+                      <div style="color: red">{{ $errors->first('email') }}</div>
+                  @endif
                  </div>
                  <div class="form-group">
                   <label>Password</label>
-                   <input type="password"  class="form-control" placeholder="***************" name="">
+                   <input type="password" class="form-control" name="password" placeholder="Password">
+                    @if($errors->has('password'))
+                        <div style="color: red">{{ $errors->first('password') }}</div>
+                    @endif
                   <div class="forget-link">
-                    <a href="#">Forgot Password?</a>
+                    <a href="{{url('forgot-password')}}">Forgot Password?</a>
                   </div>
                  </div>
-                 <button class="signin-btn">
+                 <button type="submit" class="signin-btn">
                    <div class="btn-text">
                      Login Now 
                    </div>

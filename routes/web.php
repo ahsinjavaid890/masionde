@@ -7,7 +7,7 @@ use App\Http\Controllers\CarrierController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\StaffPermissionController;
 use App\Http\Controllers\Admin\Auth\LoginController;
-use App\Http\Controllers\JobController; 
+use App\Http\Controllers\AuthUserController;
 use App\Http\Controllers\GoogleController; 
 use App\Http\Controllers\CustomLoginController; 
 /*
@@ -22,16 +22,16 @@ use App\Http\Controllers\CustomLoginController;
 */
 
 Auth::routes();
+Route::get('/home',[HomeController::class, 'dashboard'])->name('home');
 Route::name('user.')->prefix('user')->group(function(){
-    Route::get('/dashboard',[HomeController::class, 'dashboard'])->name('dashboard');
+    Route::get('/dashboard',[HomeController::class, 'dashboard'])->name('home');
     
 });
-
+Route::POST('/userlogin', [AuthUserController::class, 'login'])->name('user.login');
 
 
 // Site Routes
 Route::get('/', [SiteController::class, 'index']);
-Route::get('/login', [SiteController::class, 'login']);
 
 
 // Hiring Maps
@@ -51,10 +51,11 @@ Route::name('admin.')->prefix('admin')->namespace('App\Http\Controllers\Admin')-
 
     Route::name('users.')->prefix('users')->group(function(){
         Route::get('/','AdminController@allusers');
+        Route::post('/create','AdminController@createuser');
         Route::get('/deleteuser/{id}','AdminController@deleteuser');
         Route::get('/addnewuser','AdminController@addnewuser');
         Route::get('/edituser/{id}','AdminController@edituser');
-        Route::post('/addnewuser','AdminController@addnewusers');
+        
         Route::post('/edituser','AdminController@updateusers');
 
     });

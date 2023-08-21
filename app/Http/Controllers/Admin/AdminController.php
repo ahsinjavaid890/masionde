@@ -133,27 +133,32 @@ class AdminController extends Controller
         $update->save();
         return redirect()->back()->with('message', 'Agent Updated Successfully');
     }
-    public function addnewusers(Request $request)
+    public function createuser(Request $request)
     {
+        $request->validate(
+            [
+                'name'              =>      'required|string|max:20',
+                'email'             =>      'required|email|unique:users,email',
+                'phonenumber'             =>      'required|numeric|min:10',
+                'password'          =>      'required|alpha_num|min:6',
+                'confirm_password'  =>      'required|same:password'
+            ]
+        );
         $update = new User;
-        $update->website = $request->website;
         $update->name = $request->name;
         $update->email = $request->email;
-        $update->phone = $request->phone;
-        $update->about_me = $request->about_me;
-        if ($request->password) {
-
-            $update->password = Hash::make($request->password);
-        }
-        $update->address = $request->address;
-        $update->province = $request->province;
-        $update->city = $request->city;
-        $update->country = $request->country;
-        $update->postal = $request->postal;
+        $update->phonenumber = $request->phonenumber;
+        $update->password = Hash::make($request->password);
         $update->status = 'active';
-        $update->type = 'agent';
+        $update->type = 'user';
         $update->save();
-        return redirect()->back()->with('message', 'Agent Added Successfully');
+
+        Mail::send('email.invite', array('request' => $request , 'adminname' => Auth::user()->name), function ($message) use ($request) {
+            $message->to($request->email)->subject('Invitation to Join Masionde');
+            $message->from('info@masionde.com', 'Masionde');
+        });
+
+        return redirect()->back()->with('message', 'Invitation Sended Successfully');
     }
     public function updateuserprofile(Request $request)
     {

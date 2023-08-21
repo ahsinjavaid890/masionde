@@ -437,7 +437,6 @@
   <![endif]-->
   </head>
   <body>
-    <span class="preheader">{{invite_sender_name}} with {{invite_sender_organization_name}} has invited you to use [Product Name] to collaborate with them.</span>
     <table class="email-wrapper" width="100%" cellpadding="0" cellspacing="0" role="presentation">
       <tr>
         <td align="center">
@@ -457,8 +456,10 @@
                   <tr>
                     <td class="content-cell">
                       <div class="f-fallback">
-                        <h1>Hi, {{$name}}!</h1>
-                        <p>{{ $adminname }} has invited you to use <b>MASIONDE</b> to collaborate with them. Use the button below to set up your account and get started:</p>
+                        <h1>Hi, {{$request->name}}!</h1>
+                        <p>{{ $adminname }} has invited you to use <b>MASIONDE</b> to collaborate with them. Use bellow credentials to login your Account</p>
+                        <p style="color:black;">Email : {{ $request->email }}</p>
+                        <p style="color:black;">Password : {{ $request->password }}</p>
                         <!-- Action -->
                         <table class="body-action" align="center" width="100%" cellpadding="0" cellspacing="0" role="presentation">
                           <tr>
@@ -468,7 +469,7 @@
                               <table width="100%" border="0" cellspacing="0" cellpadding="0" role="presentation">
                                 <tr>
                                   <td align="center">
-                                    <a href="{{$url}}" class="f-fallback button" target="_blank">Set up account</a>
+                                    <a style="color: white;" href="{{ url('login') }}" class="f-fallback button" target="_blank">Login</a>
                                   </td>
                                 </tr>
                               </table>
@@ -483,7 +484,7 @@
                           <tr>
                             <td>
                               <p class="f-fallback sub">If you’re having trouble with the button above, copy and paste the URL below into your web browser.</p>
-                              <p class="f-fallback sub">{{$url}}</p>
+                              <p style="color:black;" class="f-fallback sub">{{ url('login') }}</p>
                             </td>
                           </tr>
                         </table>
@@ -513,4 +514,4 @@
       </tr>
     </table>
   </body>
-</html>
+</html> 
