@@ -198,7 +198,7 @@
                                                     	@if($r->profileimage)
                                                     	<img src="{{ url('public/images') }}/{{ $r->profileimage }}" alt="{{ $r->name }}">
                                                     	@else
-                                                        <img src="{{ url('public/admin/assets/media/users/100_9.jpg') }}" alt="photo">
+                                                        <img src="{{ url('https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930') }}" alt="photo">
                                                         @endif
                                                     </div>
                                                     <div class="ml-3">
@@ -209,12 +209,45 @@
                                             </td>
                                             <td>{{ $r->phonenumber }}</td>
                                             <td>{{ Cmf::date_format($r->created_at) }}</td>
-                                            <td>{{ $r->status }}</td>
+                                            <td>
+                                                @if($r->status == 'inactive')
+
+                                                <span class="badge badge-danger">In Active</span>
+
+                                                @else
+
+                                                <span class="badge badge-success">Active</span>
+                                            @endif</td>   
                                             <td nowrap="">
-                                                <a href="{{ url('admin/user/edit') }}/{{ $r->id }}" class="btn btn-sm btn-clean btn-icon" title="Edit details"><i class="la la-edit"></i></a>
-                                                <a href="{{ url('admin/user/delete') }}/{{ $r->id }}" class="btn btn-sm btn-clean btn-icon" title="Delete"><i class="la la-trash"></i></a>
+                                                <a href="{{ url('admin/users/edit') }}/{{ $r->id }}" class="btn btn-sm btn-clean btn-icon" title="Edit details"><i class="la la-edit"></i></a>
+                                                <a data-toggle="modal" data-target="#deleteModal{{ $r->id }}" href="javascript:;" class="btn btn-sm btn-clean btn-icon" title="Delete">
+                                                    <i class="la la-trash"></i>
+                                                </a>
                                             </td>
                                         </tr>
+                                        <div class="modal fade" id="deleteModal{{ $r->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <form method="POST" action="{{ url('admin/users/delete') }}">
+                                                @csrf
+                                            <input type="hidden" value="{{ $r->id }}" name="id">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Are you Sure you want to Delete this?</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <i aria-hidden="true" class="ki ki-close"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Are you Sure you want to Delete this User?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Cancel</button>
+                                                        <button type="submit" class="btn btn-danger font-weight-bold">Yes, Delete it</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </form>
+                                        </div>
                                         @endforeach
                                     </tbody>
                                 </table>

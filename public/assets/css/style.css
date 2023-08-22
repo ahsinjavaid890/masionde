@@ -342,10 +342,11 @@ div#navbarTogglerDemo02 {
     text-transform: capitalize;
     background: var(--card, linear-gradient(180deg, #24272C 0%, #202326 100%));
     -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: black;
+    text-decoration: none;
 }
 .my-ul li a:hover{
-	color: red;
+	color: #af232b;
 }
 button.notification-icon img {
     width: 24px;

@@ -14,18 +14,10 @@ use Illuminate\Support\Facades\DB;
 use  Illuminate\Support\Facades\Redirect;
 use App\Models\User;
 use App\Models\videos;
-
+use App\Models\slideshows;
+use App\Models\video_categories;
 class AdminController extends Controller
 {
-    public function dashboard()
-    {
-        return view('admin/dashboard/index');
-    }
-    public function allvideos()
-    {
-        $data = videos::orderby('id' ,'desc')->paginate(6);
-        return view('admin.videos.all')->with(array('data' => $data));
-    }
     function formatBytes($bytes) {
         if ($bytes > 0) {
             $i = floor(log($bytes) / log(1024));
@@ -35,15 +27,51 @@ class AdminController extends Controller
             return 0;
         }
     }
+    public function dashboard()
+    {
+        return view('admin/dashboard/index');
+    }
+    public function createcategory(Request $request)
+    {
+        $add = new video_categories;
+        $add->name = $request->name;
+        $add->url = Cmf::shorten_url($request->name);
+        $add->save();
+        return redirect()->back()->with('message', 'Category Added Successfully');   
+    }
+    public function updatecategory(Request $request)
+    {
+        $add = video_categories::find($request->id);
+        $add->name = $request->name;
+        $add->url = Cmf::shorten_url($request->name);
+        $add->save();
+        return redirect()->back()->with('message', 'Category Updated Successfully');   
+    }
+    
+    public function deletecategory(Request $request)
+    {   
+        videos::where('category_id' , $request->id)->delete();
+        video_categories::where('id' , $request->id)->delete();
+        return redirect()->back()->with('message', 'Category Deleted Successfully');
+    }
+    public function allvideos()
+    {
+        $data = videos::orderby('id' ,'desc')->paginate(6);
+        return view('admin.videos.all')->with(array('data' => $data));
+    }
     public function createvideo(Request $request)
     {
+        $getID3 = new \getID3;
+        $file = $getID3->analyze($_FILES["video"]["tmp_name"]);
         $filesize = $request->file('video')->getSize();
         $create  = new videos;
         $create->name = $request->name;
+        $create->category_id = $request->category_id;
         $create->url = Cmf::shorten_url($request->name);
         $create->short_description = $request->short_description;
         $create->video = Cmf::sendimagetodirectory($request->video);
         $create->filesize = $this->formatBytes($filesize);
+        $create->duration = $file['playtime_string'];
         if($request->image)
         {
             $create->image = Cmf::sendimagetodirectory($request->image);
@@ -53,15 +81,21 @@ class AdminController extends Controller
     }
     public function updatevideo(Request $request)
     {
+
         $create  = videos::find($request->id);
         $create->name = $request->name;
+        $create->category_id = $request->category_id;
         $create->url = Cmf::shorten_url($request->name);
         $create->short_description = $request->short_description;
         if($request->video)
         {
+
+            $getID3 = new \getID3;
+            $file = $getID3->analyze($_FILES["video"]["tmp_name"]);
             $filesize = $request->file('video')->getSize();
             $create->video = Cmf::sendimagetodirectory($request->video);
             $create->filesize = $this->formatBytes($filesize);
+            $create->duration = $file['playtime_string'];
         }
         if($request->image)
         {
@@ -80,6 +114,9 @@ class AdminController extends Controller
         videos::where('id' , $request->id)->delete();
         return redirect()->back()->with('message', 'Video Deleted Successfully');
     }
+
+
+
     public function editvideo($id)
     {
         $video = videos::find($id);
@@ -100,9 +137,9 @@ class AdminController extends Controller
         $data = DB::table('users')->where('id', $id)->first();
         return view('admin.users.edituser')->with(array('data' => $data));
     }
-    public function deleteuser($id)
+    public function deleteuser(Request $request)
     {
-        DB::table('users')->where('id', $id)->delete();
+        DB::table('users')->where('id', $request->id)->delete();
         return redirect()->back()->with('message', 'User Deleted Successfully');
     }
     public function profile()
@@ -113,25 +150,20 @@ class AdminController extends Controller
     {
         $update = User::find($request->id);
         $update->name = $request->name;
-        if ($request->insurancedocument) {
-
-            $update->insurancedocument = Cmf::sendimagetodirectory($request->insurancedocument);
-        }
         $update->email = $request->email;
-        $update->phone = $request->phone;
+        $update->phonenumber = $request->phonenumber;
         $update->about_me = $request->about_me;
+        $update->status = $request->status;
         if ($request->password) {
 
             $update->password = Hash::make($request->password);
         }
-        $update->address = $request->address;
-        $update->province = $request->province;
-        $update->city = $request->city;
-        $update->country = $request->country;
-        $update->postal = $request->postal;
-        $update->status = $request->status;
+        if($request->profileimage)
+        {
+            $update->profileimage = Cmf::sendimagetodirectory($request->profileimage);
+        }
         $update->save();
-        return redirect()->back()->with('message', 'Agent Updated Successfully');
+        return redirect()->back()->with('message', 'User Updated Successfully');
     }
     public function createuser(Request $request)
     {
@@ -200,5 +232,66 @@ class AdminController extends Controller
             session()->flash('errorsecurity', 'Repeat password Doesnt matched With New Password');
             return redirect()->back();
         }
+    }
+
+
+
+
+
+    public function allslideshows()
+    {
+        $data = slideshows::orderby('id' ,'desc')->paginate(6);
+        return view('admin.slideshows.all')->with(array('data' => $data));
+    }
+    public function createslideshow(Request $request)
+    {
+        $filesize = $request->file('video')->getSize();
+        $create  = new slideshows;
+        $create->name = $request->name;
+        $create->url = Cmf::shorten_url($request->name);
+        $create->short_description = $request->short_description;
+        $create->video = Cmf::sendimagetodirectory($request->video);
+        $create->filesize = $this->formatBytes($filesize);
+        if($request->image)
+        {
+            $create->image = Cmf::sendimagetodirectory($request->image);
+        }
+        $create->save();
+        return redirect()->back()->with('message', 'Video Uploaded Successfully');
+    }
+    public function updateslideshow(Request $request)
+    {
+        $create  = slideshows::find($request->id);
+        $create->name = $request->name;
+        $create->url = Cmf::shorten_url($request->name);
+        $create->short_description = $request->short_description;
+        if($request->video)
+        {
+            $filesize = $request->file('video')->getSize();
+            $create->video = Cmf::sendimagetodirectory($request->video);
+            $create->filesize = $this->formatBytes($filesize);
+        }
+        if($request->image)
+        {
+            $create->image = Cmf::sendimagetodirectory($request->image);
+        }
+        $create->save();
+        return redirect()->back()->with('message', 'Video Updated Successfully');
+    }
+    public function searchslideshow(Request $request)
+    {    
+        $data = slideshows::Where('name', 'like', '%' . $request->keyword . '%')->paginate(100);
+        return view('admin.slideshows.all')->with(array('data' => $data));
+    }
+    public function deleteslideshow(Request $request)
+    {
+        slideshows::where('id' , $request->id)->delete();
+        return redirect()->back()->with('message', 'Video Deleted Successfully');
+    }
+    public function editslideshow($id)
+    {
+        $video = slideshows::find($id);
+        $data = slideshows::orderby('id' ,'desc')->whereNotIn('id', [$id])->paginate(6);
+        return view('admin.slideshows.edit')->with(array('data' => $data,'video' => $video));
     }
 }

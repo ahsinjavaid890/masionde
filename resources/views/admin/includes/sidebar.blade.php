@@ -7,21 +7,21 @@
         <ul class="nav flex-column">
             <!--begin::Item-->
             <li class="nav-item mb-5" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="Dashboard">
-                <a href="{{ url('admin/dashboard') }}" class="nav-link btn btn-icon btn-clean btn-icon-white btn-lg active">
+                <a href="{{ url('admin/dashboard') }}" class="nav-link btn btn-icon btn-clean btn-icon-white btn-lg @if(Request::segment(2) == 'dashboard') active @endif">
                     <i class="flaticon2-protection icon-lg"></i>
                 </a>
             </li>
             <!--end::Item-->
             <!--begin::Item-->
             <li class="nav-item mb-5" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="Slideshows">
-                <a href="{{ url('admin/slideshows') }}" class="nav-link btn btn-icon btn-icon-white btn-lg">
+                <a href="{{ url('admin/slideshows') }}" class="nav-link btn btn-icon btn-clean btn-icon-white btn-lg @if(Request::segment(2) == 'slideshows') active @endif">
                     <i class="flaticon2-files-and-folders icon-lg"></i>
                 </a>
             </li>
             <!--end::Item-->
             <!--begin::Item-->
             <li class="nav-item mb-5" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="Videos">
-                <a href="{{ url('admin/videos') }}" class="nav-link btn btn-icon btn-icon-white btn-lg">
+                <a href="{{ url('admin/videos') }}" class="nav-link btn btn-icon btn-clean btn-icon-white btn-lg @if(Request::segment(2) == 'videos') active @endif">
                     <i class="flaticon-imac icon-lg"></i>
                 </a>
             </li>
@@ -35,7 +35,7 @@
             <!--end::Item-->
             <!--begin::Item-->
             <li class="nav-item mb-5" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="Users">
-                <a href="{{ url('admin/dashboard') }}" class="nnav-link btn btn-icon btn-icon-white btn-lg">
+                <a href="{{ url('admin/users') }}" class="nav-link btn btn-icon btn-clean btn-icon-white btn-lg @if(Request::segment(2) == 'users') active @endif">
                     <i class="flaticon-users icon-lg"></i>
                 </a>
             </li>
@@ -45,7 +45,7 @@
     </div>
     <!--end::Nav Wrapper-->
     <div class="aside-footer d-flex flex-column align-items-center flex-column-auto py-8">
-        <a href="{{ url('admin/profile') }}" class="btn btn-icon btn-clean btn-lg mb-1" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="Settings">
+        <a href="{{ url('admin/profile') }}" class="btn btn-icon btn-clean btn-lg mb-1 @if(Request::segment(2) == 'profile') active @endif" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="Settings">
             <span class="svg-icon svg-icon-xl">
                 <i class="flaticon-settings icon-lg text-white"></i>
             </span>

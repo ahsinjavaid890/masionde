@@ -1,12 +1,12 @@
 @extends('admin.layouts.main-layout')
-@section('title','Edit Video')
+@section('title','Edit Slideshows')
 
 @section('adminbeardcumb')
 <li class="breadcrumb-item">
-    <a href="{{ url('admin/videos') }}" class="text-muted">All videos</a>
+    <a href="{{ url('admin/slideshows') }}" class="text-muted">All Slideshows</a>
 </li>
 <li class="breadcrumb-item">
-    <a href="javascript:void(0)" class="text-muted">Edit Video : {{ $video->name }}</a>
+    <a href="javascript:void(0)" class="text-muted">Edit Slideshow : {{ $video->name }}</a>
 </li>
 @endsection
 
@@ -26,8 +26,8 @@
                             <!--begin::Header-->
                             <div class="card-header border-0 mt-5">
                                 <h3 class="card-title align-items-start flex-column text-dark">
-                                    <span class="font-weight-bolder text-dark">Videos</span>
-                                    <span class="text-muted mt-3 font-weight-bold font-size-sm">Updated Videos</span>
+                                    <span class="font-weight-bolder text-dark">Slideshows</span>
+                                    <span class="text-muted mt-3 font-weight-bold font-size-sm">Updated Slideshows</span>
                                 </h3>
                                 <div class="card-toolbar">
                                     <form method="GET" action="{{ url('admin/videos/search') }}">
@@ -168,7 +168,7 @@
                                                             </button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            Are you Sure you want to Delete this Video?
+                                                            Are you Sure you want to Delete this Slideshow?
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Cancel</button>
@@ -197,30 +197,18 @@
                             <!--begin::Header-->
                             <div class="card-header py-3">
                                 <div class="card-title align-items-start flex-column">
-                                    <h3 class="card-label font-weight-bolder text-dark">Edit Video</h3>
-                                    <span class="text-muted font-weight-bold font-size-sm mt-1">Upload New Video</span>
+                                    <h3 class="card-label font-weight-bolder text-dark">Edit Slideshow</h3>
                                 </div>
                             </div>
                             <!--end::Header-->
                             <!--begin::Form-->
                             
-                            <form enctype="multipart/form-data" class="form" method="POST" action="{{ url('admin/videos/update') }}">
+                            <form enctype="multipart/form-data" class="form" method="POST" action="{{ url('admin/slideshows/update') }}">
                                 <!--begin::Body-->
                                 @csrf
                                 <input type="hidden" value="{{ $video->id }}" name="id">
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label class="lable-control">Video Category</label>
-                                                <select required class="form-control" name="category_id">
-                                                    <option value="">Select Category</option>
-                                                    @foreach(DB::table('video_categories')->get() as $c)
-                                                    <option @if($c->id == $video->category_id) selected @endif value="{{ $c->id }}">{{ $c->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label class="lable-control">Slideshows Title</label>
@@ -235,8 +223,8 @@
                                         </div>
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label class="lable-control">Upload File (mp4)</label>
-                                                <input accept=".mp4" type="file"  class="form-control form-control-md form-control-solid" name="video">
+                                                <label class="lable-control">Upload File (Pptx)</label>
+                                                <input accept=".ppt, .pptx" type="file" required class="form-control form-control-md form-control-solid" name="video">
                                             </div>
                                         </div>
                                         <div class="col-md-12">
@@ -246,7 +234,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-12">
-                                            <button type="submit" class="btn btn-primary mr-2">Update video</button>
+                                            <button type="submit" class="btn btn-primary mr-2">Update Slideshow</button>
                                         </div>                                                        
                                     </div>  
                                 </div>

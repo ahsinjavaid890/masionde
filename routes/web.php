@@ -23,9 +23,17 @@ use App\Http\Controllers\CustomLoginController;
 
 Auth::routes();
 Route::get('/home',[HomeController::class, 'dashboard'])->name('home');
-Route::name('user.')->prefix('user')->group(function(){
+Route::get('/home',[HomeController::class, 'dashboard'])->name('userprofile');
+
+
+
+
+Route::name('user.')->prefix('')->group(function(){
     Route::get('/dashboard',[HomeController::class, 'dashboard'])->name('home');
-    
+    Route::get('/videos',[HomeController::class, 'videos'])->name('videos');
+    Route::get('/video/{id}',[HomeController::class, 'videodetail']);
+    Route::get('/category/{id}',[HomeController::class, 'categorydetail']);
+    Route::get('/slideshows',[HomeController::class, 'slideshows'])->name('slideshows');
 });
 Route::POST('/userlogin', [AuthUserController::class, 'login'])->name('user.login');
 
@@ -52,12 +60,9 @@ Route::name('admin.')->prefix('admin')->namespace('App\Http\Controllers\Admin')-
     Route::name('users.')->prefix('users')->group(function(){
         Route::get('/','AdminController@allusers');
         Route::post('/create','AdminController@createuser');
-        Route::get('/deleteuser/{id}','AdminController@deleteuser');
-        Route::get('/addnewuser','AdminController@addnewuser');
-        Route::get('/edituser/{id}','AdminController@edituser');
-        
+        Route::get('/edit/{id}','AdminController@edituser');
+        Route::post('/delete','AdminController@deleteuser');
         Route::post('/edituser','AdminController@updateusers');
-
     });
 
 
@@ -68,6 +73,20 @@ Route::name('admin.')->prefix('admin')->namespace('App\Http\Controllers\Admin')-
         Route::get('/edit/{id}','AdminController@editvideo');
         Route::post('/update','AdminController@updatevideo');
         Route::get('/search','AdminController@searchvideo');
+        Route::post('/createcategory','AdminController@createcategory');
+        Route::post('/deletecategory','AdminController@deletecategory');
+        Route::post('/updatecategory','AdminController@updatecategory');
+        
     });
 
+
+
+    Route::name('slideshows.')->prefix('slideshows')->group(function(){
+        Route::get('/','AdminController@allslideshows');
+        Route::post('/create','AdminController@createslideshow');
+        Route::post('/delete','AdminController@deleteslideshow');
+        Route::get('/edit/{id}','AdminController@editslideshow');
+        Route::post('/update','AdminController@updateslideshow');
+        Route::get('/search','AdminController@searchslideshow');
+    });
 });

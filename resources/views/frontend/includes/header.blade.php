@@ -1,158 +1,63 @@
-
 @php
     $url = request()->segment(count(request()->segments()));
 @endphp
-<header class="header-area header-area-five fixed-top">
-    <!-- Start Navbar Area -->
-    <div class="nav-area nev-style-five">
-        <div class="navbar-area">
-            <!-- Menu For Mobile Device -->
-            <div class="mobile-nav">
-                <a href="{{ url('') }}" class="logo">
-                    <img src="{{ url('public/images') }}/{{ Cmf::get_store_value('header_logo') }}" alt="Logo">
-                </a>
+<header>
+    <div class="container">
+        <div class="row">
+          <nav class="navbar navbar-expand-lg navbar-light my-navbar">
+            <a class="navbar-brand" href="{{ url('') }}"><img src="{{ url('public/assets/images/logo.png') }}"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+              <ul class="navbar-nav my-ul">
+                <li>
+                  <a @if(Request::segment(1) == 'dashboard') style="color:#af232b;" @endif @if(Request::segment(1) == 'home') style="color:#af232b;" @endif href="{{ url('dashboard') }}">Dashboard </a>
+                </li>
+                <li><a @if(Request::segment(1) == 'slideshows') style="color:#af232b;" @endif href="{{ url('slideshows') }}">Slideshows</a></li>
+                <li><a @if(Request::segment(1) == 'videos') style="color:#af232b;" @endif href="{{ url('videos') }}">Videos</a></li>
+                <li><a @if(Request::segment(1) == 'quizes') style="color:#af232b;" @endif href="{{ url('quizes') }}">Quizzes</a></li>
+              </ul>
+              <form class="form-inline my-2 my-lg-0">
+                <div class="search-box">
+                    <input type="text" class="search-input" placeholder="Search...">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                      <path d="M8.625 16.3125C4.3875 16.3125 0.9375 12.8625 0.9375 8.625C0.9375 4.3875 4.3875 0.9375 8.625 0.9375C12.8625 0.9375 16.3125 4.3875 16.3125 8.625C16.3125 12.8625 12.8625 16.3125 8.625 16.3125ZM8.625 2.0625C5.0025 2.0625 2.0625 5.01 2.0625 8.625C2.0625 12.24 5.0025 15.1875 8.625 15.1875C12.2475 15.1875 15.1875 12.24 15.1875 8.625C15.1875 5.01 12.2475 2.0625 8.625 2.0625Z" fill="#5E5E5E"/>
+                      <path d="M16.5 17.0626C16.3575 17.0626 16.215 17.0101 16.1025 16.8976L14.6025 15.3976C14.385 15.1801 14.385 14.8201 14.6025 14.6026C14.82 14.3851 15.18 14.3851 15.3975 14.6026L16.8975 16.1026C17.115 16.3201 17.115 16.6801 16.8975 16.8976C16.785 17.0101 16.6425 17.0626 16.5 17.0626Z" fill="#5E5E5E"/>
+                    </svg>
+                </div>
+                <div class="notification">
+                  <button class="notification-icon"><img src="{{ url('public/assets/images/notification-status.png') }}" alt="Notification"></button>
+                  <div class="notification-dropdown">
+                      <p>You have new notifications!</p>
+                      <a href="#">Notification 1</a>
+                      <a href="#">Notification 2</a>
+                      <a href="#">Notification 3</a>
+                  </div>
+               </div>
+                 <div class="profile">
+                      <button class="profile-icon">
+                        @if(Auth::user()->profileimage)
+                        <img src="{{ url('public/images') }}/{{ Auth::user()->profileimage }}" alt="{{ Auth::user()->name }}">
+                        @else
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930" alt="{{ Auth::user()->name }}">
+                        @endif
+                        
+                      </button>
+                      <div class="profile-dropdown">
+                          <p>Welcome, {{ Auth::user()->name }}!</p>
+                          <a href="{{ url('profile') }}">Profile</a>
+                          <a href="javascript:void(0)" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                      </div>
+                  </div>
+
+              </form>
+              <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+            @csrf
+        </form>
             </div>
-            <!-- Menu For Desktop Device -->
-            <div class="main-nav">
-                <nav class="navbar navbar-expand-md navbar-light">
-                    <div class="container">
-                        <a class="navbar-brand" href="{{ url('') }}">
-                            <img src="{{ url('public/images') }}/{{ Cmf::get_store_value('header_logo') }}" alt="Logo">
-                        </a>
-                        <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
-                            <ul class="navbar-nav m-auto">
-                                <li class="nav-item">
-                                    <a href="{{ url('') }}" class="nav-link @if($url) @else active @endif">Home</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ url('travel-insurance') }}" class="nav-link dropdown-toggle @if($url == 'travel-insurance') active @endif @if($url == 'super-visa-insurance') active @endif @if($url == 'visitor-insurance') active @endif @if($url == 'student-insurance') active @endif">
-                                         Travel Insurance
-                                        <i class="bx bx-chevron-down"></i>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li class="nav-item">
-                                            <a href="{{ url('travel-insurance') }}" class="nav-link @if($url == 'travel-insurance') activesubnav @endif">Travel Insurance</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="{{ url('super-visa-insurance') }}" class="nav-link @if($url == 'super-visa-insurance') activesubnav @endif">Super Visa Insurance</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="{{ url('visitor-insurance') }}" class="nav-link @if($url == 'visitor-insurance') activesubnav @endif">Visitor Insurance</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="{{ url('student-insurance') }}" class="nav-link @if($url == 'student-insurance') activesubnav @endif">Student Insurance</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="javascript:void(0)" class="nav-link dropdown-toggle">
-                                                Insurance For Candians
-                                                <i class="bx bx-chevron-down"></i>
-                                            </a>
-                                            <ul class="dropdown-menu">
-                                                <li class="nav-item">
-                                                    <a href="{{ url('single-trip-insurance') }}" class="nav-link">Single Trip</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a href="javascript:void(0)" class="nav-link">Multitrip
-
-                                                        <span style=" text-align: left; margin-left: 68px; background-color: red; border-radius: 15px; padding: 5px; color: white; ">Working</span>
-                                                    </a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a href="javascript:void(0)" class="nav-link">All Inclusive
-
-                                                        <span style=" text-align: left; margin-left: 50px; background-color: red; border-radius: 15px; padding: 5px; color: white; ">Working</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a href="{{ url('life-insurance') }}" class="nav-link dropdown-toggle  @if($url == 'life-insurance') active @endif @if($url == 'term-life-insurance') active @endif @if($url == 'desability') active @endif @if($url == 'critical-illness') active @endif  @if($url == 'health-insurance') active @endif  @if($url == 'nonmedical') active @endif  @if($url == 'rrsp') active @endif  @if($url == 'resp') active @endif  @if($url == 'mortgage') active @endif  @if($url == 'tfsa') active @endif">
-                                            Insurance 
-                                            <i class="bx bx-chevron-down"></i>
-                                        </a>
-
-                                    <ul class="dropdown-menu">
-                                        <li class="nav-item">
-                                            <a href="{{ url('life-insurance') }}" class="nav-link @if($url == 'life-insurance') activesubnav @endif">Whole Life Insurance</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="{{ url('term-life-insurance') }}" class="nav-link @if($url == 'term-life-insurance') activesubnav @endif">Term Life Insurance</a>
-                                        </li>
-                                        <li class="nav-item ">
-                                            <a href="{{ url('desability') }} " class="nav-link @if($url == 'desability') activesubnav @endif">Desability</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="{{ url('critical-illness') }}" class="nav-link @if($url == 'critical-illness') activesubnav @endif">Critical Illness Insurance</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="{{ url('health-insurance') }}" class="nav-link @if($url == 'health-insurance') activesubnav @endif">Health Insurance</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="{{ url('nonmedical') }}" class="nav-link @if($url == 'nonmedical') activesubnav @endif">Non Medical Insurance</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="{{ url('rrsp') }}" class="nav-link @if($url == 'rrsp') activesubnav @endif">RRSP Insurance</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="{{ url('resp') }}" class="nav-link @if($url == 'resp') activesubnav @endif">RESP Insurance</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="{{ url('mortgage') }}" class="nav-link @if($url == 'mortgage') activesubnav @endif">Mortgage Insurance</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="{{ url('tfsa') }}" class="nav-link @if($url == 'tfsa') activesubnav @endif">TFSA Insurance</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ url('aboutus') }}" class="nav-link dropdown-toggle @if($url == 'aboutus') active @endif" >
-                                            About Us
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ url('product') }}" class="nav-link dropdown-toggle @if($url == 'product') active @endif">
-                                            Products
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ url('blogs') }}" class="nav-link @if($url == 'blogs') active @endif">Blogs</a>
-                                </li>
-                                
-                                @if(Auth::check()) 
-                                    @if(Auth::user()->user_type == 'admin')
-                                        <li class="nav-item">
-                                            <a href="{{ url('admin/dashboard')}}" class="btn btn-lg login-btn">
-                                            Admin dashboard 
-                                            </a>
-                                        </li>
-                                    @else
-                                        <li class="nav-item">
-                                            <a href="{{ url('profile')}}" class="btn btn-lg login-btn">
-                                                My Account
-                                            </a>
-                                        </li>
-                                    @endif
-                                @else
-                                <li class="nav-item">
-                                    <a href="{{ url('login')}}" class="btn btn-lg login-btn">
-                                    Login 
-                                    </a>
-                                </li>
-                                @endif
-
-                            </ul>
-                            <!-- Start Other Option -->
-                            <div class="login-signup d-flex">
-                            </div>
-                            <!-- End Other Option -->
-                        </div>
-                    </div>
-                </nav>
-            </div>
+         </nav>
         </div>
     </div>
-    <!-- End Navbar Area -->
 </header>
