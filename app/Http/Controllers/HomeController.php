@@ -26,6 +26,11 @@ class HomeController extends Controller
         $data = slideshows::orderby('id' , 'desc')->paginate(8);
         return view('frontend.slideshows.all')->with(array('data' =>$data));
     }
+    public function slideshowdetail($id)
+    {
+        $data = slideshows::where('url' , $id)->first();
+        return view('frontend.slideshows.detail')->with(array('data' =>$data));
+    }
     public function videos()
     {
         $data = videos::orderby('id' , 'desc')->paginate(8);
@@ -40,7 +45,6 @@ class HomeController extends Controller
     public function videodetail($id)
     {
         $data = videos::where('url' , $id)->first();
-
         $check = mywatchvideos::where('user_id' , Auth::user()->id)->where('video_id' , $data->id)->count();
         if($check > 0)
         {

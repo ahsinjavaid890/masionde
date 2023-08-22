@@ -34,6 +34,9 @@ Route::name('user.')->prefix('')->group(function(){
     Route::get('/video/{id}',[HomeController::class, 'videodetail']);
     Route::get('/category/{id}',[HomeController::class, 'categorydetail']);
     Route::get('/slideshows',[HomeController::class, 'slideshows'])->name('slideshows');
+    Route::get('/slideshow/{id}',[HomeController::class, 'slideshowdetail']);
+
+    
 });
 Route::POST('/userlogin', [AuthUserController::class, 'login'])->name('user.login');
 
