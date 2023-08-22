@@ -48,24 +48,7 @@
       @endforeach
     </div>
     <div class="row">
-      <div class="col-12">
-        <div class="paginations">
-          <ul>
-            <li>
-              <a href="#">
-                <i class="fa fa-angle-left" aria-hidden="true"></i>
-              </a>
-            </li>
-            <li><a href="" class="active">1</a></li>
-            <li><a href="">2</a></li>
-            <li>
-              <a href="#">
-                <i class="fa fa-angle-right" aria-hidden="true"></i>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
+        {!! $data->links('frontend.pagination') !!}
     </div>
   </div>
 </section>

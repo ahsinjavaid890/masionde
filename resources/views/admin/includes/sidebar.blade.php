@@ -28,7 +28,7 @@
             <!--end::Item-->
             <!--begin::Item-->
             <li class="nav-item mb-5" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="Quizzes">
-                <a href="{{ url('admin/quizzes') }}" class="nav-link btn btn-icon btn-icon-white btn-lg">
+                <a href="{{ url('admin/quizzes') }}" class="nav-link btn btn-icon btn-clean btn-icon-white btn-lg @if(Request::segment(2) == 'quizzes') active @endif">
                     <i class="flaticon-layers icon-lg"></i>
                 </a>
             </li>

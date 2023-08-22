@@ -211,6 +211,17 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
+                                                <label class="lable-control">Video Category</label>
+                                                <select required class="form-control" name="category_id">
+                                                    <option value="">Select Category</option>
+                                                    @foreach(DB::table('slideshow_categories')->get() as $c)
+                                                    <option @if($c->id == $video->category_id) selected @endif value="{{ $c->id }}">{{ $c->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
                                                 <label class="lable-control">Slideshows Title</label>
                                                 <input value="{{ $video->name }}" required type="text" class="form-control form-control-md form-control-solid" name="name">
                                             </div>

@@ -48,6 +48,9 @@
       @endforeach
     </div>
     <div class="row">
+        {!! $data->links('frontend.pagination') !!}
+    </div>
+    <!-- <div class="row">
       <div class="col-12">
         <div class="paginations">
           <ul>
@@ -66,7 +69,7 @@
           </ul>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </section>
 @endsection

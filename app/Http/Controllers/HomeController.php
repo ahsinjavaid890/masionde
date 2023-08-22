@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\videos;
 use App\Models\mywatchvideos;
 use App\Models\video_categories;
+use App\Models\slideshow_categories;
 use App\Models\slideshows;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -29,7 +30,8 @@ class HomeController extends Controller
     public function slideshowdetail($id)
     {
         $data = slideshows::where('url' , $id)->first();
-        return view('frontend.slideshows.detail')->with(array('data' =>$data));
+        $relatedslideshow = slideshows::where('category_id' , $data->category_id)->limit(4)->get();
+        return view('frontend.slideshows.detail')->with(array('data' =>$data,'relatedslideshow' =>$relatedslideshow));
     }
     public function videos()
     {
@@ -41,6 +43,12 @@ class HomeController extends Controller
         $category = video_categories::where('url' , $id)->first();
         $data = videos::orderby('id' , 'desc')->where('category_id' , $category->id)->paginate(8);
         return view('frontend.videos.categorydetail')->with(array('data' =>$data,'category' =>$category));
+    }
+    public function slidecategory($id)
+    {
+        $category = slideshow_categories::where('url' , $id)->first();
+        $data = slideshows::orderby('id' , 'desc')->where('category_id' , $category->id)->paginate(8);
+        return view('frontend.slideshows.categorydetail')->with(array('data' =>$data,'category' =>$category));
     }
     public function videodetail($id)
     {
@@ -59,7 +67,7 @@ class HomeController extends Controller
             $newdata->video_id = $data->id;
             $newdata->save();
         }
-
-        return view('frontend.videos.detail')->with(array('data' =>$data));
+        $relatedvideos = videos::where('category_id' , $data->category_id)->limit(4)->get();
+        return view('frontend.videos.detail')->with(array('data' =>$data,'relatedvideos' =>$relatedvideos));
     }
 }

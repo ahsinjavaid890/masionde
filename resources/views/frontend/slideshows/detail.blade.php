@@ -7,7 +7,6 @@
  <div class="container">
    <div class="main-outer video-outer">
      <div class="left-video">
-      <iframe src="https://view.officeapps.live.com/op/embed.aspx?src={{  url('public/images') }}/{{ $data->video }}" width='100%' height='600px' frameborder='0'>
        <img src="assets/images/slideshow-bigger.png" style="width:100%; height:320px">
        <div class="row mt-3">
          <div class="col-md-3">
@@ -45,42 +44,18 @@
       </div>
     </div>
     <div class="row">
+      @FOREACH($relatedslideshow as $r)
       <div class="col-md-3 col-12">
-        <div class="video-cards">
-          <a href="slideshow-detail.html">
-            <img src="assets/images/slideshows1.png" class="img-fluid">
-            <h2>Puzzle - Education Keynote Template</h2>
-            <span>Download</span>
-          </a>
+          <div class="video-cards">
+            <a href="{{ url('slideshow') }}/{{ $r->url }}">
+              <img src="{{ url('public/images') }}/{{ $r->image }}" class="img-fluid">
+              <h2>{{ $r->name }}</h2>
+              
+            </a>
+            <a class="downloadbutton" href="{{ url('public/images') }}/{{ $r->video }}" download="">Download</a>
+          </div>
         </div>
-      </div>
-      <div class="col-md-3 col-12">
-        <div class="video-cards">
-          <a href="slideshow-detail.html">
-            <img src="assets/images/slideshows2.png" class="img-fluid">
-            <h2>Puzzle - Education Keynote Template</h2>
-            <span>Download</span>
-          </a>
-        </div>
-      </div>
-      <div class="col-md-3 col-12">
-        <div class="video-cards">
-          <a href="slideshow-detail.html">
-            <img src="assets/images/slideshows3.png" class="img-fluid">
-            <h2>Puzzle - Education Keynote Template</h2>
-            <span>Download</span>
-          </a>
-        </div>
-      </div>
-      <div class="col-md-3 col-12">
-        <div class="video-cards">
-          <a href="slideshow-detail.html">
-            <img src="assets/images/slideshows4.png" class="img-fluid">
-            <h2>Mythology Trivia: Gods, Heroes, and Legends</h2>
-            <span>Download</span>
-          </a>
-        </div>
-      </div>
+      @endforeach
     </div>
   </div>
 </section>

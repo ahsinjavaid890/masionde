@@ -12,7 +12,12 @@
      </div>
      <div class="morning-right">
        <div class="sun-media">
+        @if(Cmf::gettimeforday() == 'Good night')
+        <img src="https://cdn-icons-png.flaticon.com/512/180/180700.png">
+        @endif
+        @if(Cmf::gettimeforday() == 'Good morning')
          <img src="{{ url('public/assets/images/sun.png') }}">
+        @endif
        </div>
      </div>
    </div>

@@ -218,8 +218,9 @@
         <div class="modal-body">
             <div class="">
     <form enctype="multipart/form-data" class="form" method="POST" action="{{ url('admin/videos/createcategory') }}">
-<!--begin::Body-->
-@csrf
+    <!--begin::Body-->
+    @csrf
+    <input type="hidden" name="tablename" value="video_categories">
     <div class="row">
         <div class="col-md-12">
             <div class="form-group">
@@ -249,6 +250,7 @@
     <div class="modal fade" id="updateModalcate{{ $r->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <form method="POST" action="{{ url('admin/videos/updatecategory') }}">
             @csrf
+        <input type="hidden" name="tablename" value="video_categories">
         <input type="hidden" value="{{ $r->id }}" name="id">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -277,6 +279,7 @@
     <div class="modal fade" id="deleteModalcate{{ $r->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <form method="POST" action="{{ url('admin/videos/deletecategory') }}">
             @csrf
+        <input type="hidden" name="tablename" value="video_categories">
         <input type="hidden" value="{{ $r->id }}" name="id">
         <div class="modal-dialog" role="document">
             <div class="modal-content">

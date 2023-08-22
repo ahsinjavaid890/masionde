@@ -16,6 +16,8 @@ use App\Models\User;
 use App\Models\videos;
 use App\Models\slideshows;
 use App\Models\video_categories;
+use App\Models\slideshow_categories;
+use App\Models\quizzes;
 class AdminController extends Controller
 {
     function formatBytes($bytes) {
@@ -33,7 +35,13 @@ class AdminController extends Controller
     }
     public function createcategory(Request $request)
     {
-        $add = new video_categories;
+        if($request->tablename = 'slideshow_categories')
+        {
+            $add = new slideshow_categories;    
+        }else{
+            $add = new video_categories;
+        }
+        
         $add->name = $request->name;
         $add->url = Cmf::shorten_url($request->name);
         $add->save();
@@ -41,7 +49,13 @@ class AdminController extends Controller
     }
     public function updatecategory(Request $request)
     {
-        $add = video_categories::find($request->id);
+        if($request->tablename = 'slideshow_categories')
+        {
+            $add = slideshow_categories::find($request->id);    
+        }else{
+            $add = video_categories::find($request->id);
+        }
+        
         $add->name = $request->name;
         $add->url = Cmf::shorten_url($request->name);
         $add->save();
@@ -50,8 +64,15 @@ class AdminController extends Controller
     
     public function deletecategory(Request $request)
     {   
-        videos::where('category_id' , $request->id)->delete();
-        video_categories::where('id' , $request->id)->delete();
+        if($request->tablename = 'slideshow_categories')
+        {
+            slideshows::where('category_id' , $request->id)->delete();
+            slideshow_categories::where('id' , $request->id)->delete();
+        }else{
+           videos::where('category_id' , $request->id)->delete();
+           video_categories::where('id' , $request->id)->delete();
+        }
+        
         return redirect()->back()->with('message', 'Category Deleted Successfully');
     }
     public function allvideos()
@@ -248,6 +269,7 @@ class AdminController extends Controller
         $filesize = $request->file('video')->getSize();
         $create  = new slideshows;
         $create->name = $request->name;
+        $create->category_id = $request->category_id;
         $create->url = Cmf::shorten_url($request->name);
         $create->short_description = $request->short_description;
         $create->video = Cmf::sendimagetodirectory($request->video);
@@ -263,6 +285,7 @@ class AdminController extends Controller
     {
         $create  = slideshows::find($request->id);
         $create->name = $request->name;
+        $create->category_id = $request->category_id;
         $create->url = Cmf::shorten_url($request->name);
         $create->short_description = $request->short_description;
         if($request->video)
@@ -293,5 +316,16 @@ class AdminController extends Controller
         $video = slideshows::find($id);
         $data = slideshows::orderby('id' ,'desc')->whereNotIn('id', [$id])->paginate(6);
         return view('admin.slideshows.edit')->with(array('data' => $data,'video' => $video));
+    }
+
+
+    public function allquizzes()
+    {
+        $data  = quizzes::orderby('id' , 'desc')->paginate(8);
+        return view('admin.quizzes.all')->with(array('data' => $data));
+    }
+    public function addnewquiz()
+    {
+        return view('admin.quizzes.add');   
     }
 }

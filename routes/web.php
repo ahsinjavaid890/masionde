@@ -35,7 +35,7 @@ Route::name('user.')->prefix('')->group(function(){
     Route::get('/category/{id}',[HomeController::class, 'categorydetail']);
     Route::get('/slideshows',[HomeController::class, 'slideshows'])->name('slideshows');
     Route::get('/slideshow/{id}',[HomeController::class, 'slideshowdetail']);
-
+    Route::get('/slidecategory/{id}',[HomeController::class, 'slidecategory']);
     
 });
 Route::POST('/userlogin', [AuthUserController::class, 'login'])->name('user.login');
@@ -89,6 +89,17 @@ Route::name('admin.')->prefix('admin')->namespace('App\Http\Controllers\Admin')-
         Route::post('/create','AdminController@createslideshow');
         Route::post('/delete','AdminController@deleteslideshow');
         Route::get('/edit/{id}','AdminController@editslideshow');
+        Route::post('/update','AdminController@updateslideshow');
+        Route::get('/search','AdminController@searchslideshow');
+    });
+
+
+    Route::name('quizzes.')->prefix('quizzes')->group(function(){
+        Route::get('/','AdminController@allquizzes');
+        Route::get('/addnew','AdminController@addnewquiz');
+        Route::post('/create','AdminController@createslideshow');
+        Route::post('/delete','AdminController@deleteslideshow');
+        
         Route::post('/update','AdminController@updateslideshow');
         Route::get('/search','AdminController@searchslideshow');
     });

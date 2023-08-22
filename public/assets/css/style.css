@@ -807,6 +807,18 @@ section.dashboard-sec {
     color: #000;
         padding: 14px 6px 5px 6px;
 }
+.downloadbutton{
+    border-radius: 31px;
+    border: 1px solid var(--border, #EDEDED);
+    background: var(--white, #FFF);
+    padding: 7px 18px;
+    color: var(--gray, #5E5E5E);
+    font-family: BRCandor-Regular;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
 .video-cards a span {
 	border-radius: 31px;
     border: 1px solid var(--border, #EDEDED);

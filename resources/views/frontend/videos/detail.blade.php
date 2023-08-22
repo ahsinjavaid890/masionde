@@ -31,42 +31,23 @@
           </div>
         </div>
         <div class="row">
+          @foreach($relatedvideos as $r)
           <div class="col-md-3 col-12">
             <div class="video-cards">
-              <a href="">
-                <img src="assets/images/video-1.png" class="img-fluid">
-                <h2>Mythology Trivia: Gods, Heroes, and Legends</h2>
-                <span><i class="fa fa-clock-o" aria-hidden="true"></i> 30 min</span>
+              <a href="{{ url('video') }}/{{ $r->url }}">
+                @if($r->image)
+                <img src="{{ url('public/images') }}/{{ $r->image }}" class="img-fluid">
+                @else
+                <img src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930" class="img-fluid">
+                @endif
+                <h2>{{ $r->name }}</h2>
+                @if($r->duration)
+                <span><i class="fa fa-clock-o" aria-hidden="true"></i> {{ $r->duration }} Sec</span>
+                @endif
               </a>
             </div>
           </div>
-          <div class="col-md-3 col-12">
-            <div class="video-cards">
-              <a href="">
-                <img src="assets/images/video-2.png" class="img-fluid">
-                <h2>Mythology Trivia: Gods, Heroes, and Legends</h2>
-                <span><i class="fa fa-clock-o" aria-hidden="true"></i> 30 min</span>
-              </a>
-            </div>
-          </div>
-          <div class="col-md-3 col-12">
-            <div class="video-cards">
-              <a href="">
-                <img src="assets/images/video-3.png" class="img-fluid">
-                <h2>Mythology Trivia: Gods, Heroes, and Legends</h2>
-                <span><i class="fa fa-clock-o" aria-hidden="true"></i> 30 min</span>
-              </a>
-            </div>
-          </div>
-          <div class="col-md-3 col-12">
-            <div class="video-cards">
-              <a href="">
-                <img src="assets/images/video-4.png" class="img-fluid">
-                <h2>Mythology Trivia: Gods, Heroes, and Legends</h2>
-                <span><i class="fa fa-clock-o" aria-hidden="true"></i> 30 min</span>
-              </a>
-            </div>
-          </div>
+          @endforeach
         </div>
       </div>
     </section>
