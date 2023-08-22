@@ -14,10 +14,10 @@
         <!--begin::Entry-->
         <div class="d-flex flex-column-fluid">
             <!--begin::Container-->
-            <div class=" container-fluid ">
+            <div class="container">
                 @include('alerts.index')
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-8">
                         <!--begin::Base Table Widget 7-->
                         <div class="card card-custom card-stretch gutter-b">
                             <!--begin::Header-->
@@ -132,7 +132,7 @@
                         </div>
                         <!--end::Base Table Widget 7-->
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="card card-custom">
                             <!--begin::Header-->
                             <div class="card-header py-3">
@@ -140,7 +140,11 @@
                                     <h3 class="card-label font-weight-bolder text-dark">Add New</h3>
                                     <span class="text-muted font-weight-bold font-size-sm mt-1">Upload New Video</span>
                                 </div>
+                                <div class="card-toolbar">
+                                    <button data-toggle="modal" data-target="#allcategories" class="btn btn-sm btn-primary">All Categories</button>
+                                </div>
                             </div>
+                            
                             <!--end::Header-->
                             <!--begin::Form-->
                             
@@ -194,108 +198,6 @@
                             <!--end::Form-->
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="card card-custom">
-                            <!--begin::Header-->
-                            <div class="card-header py-3">
-                                <div class="card-title align-items-start flex-column">
-                                    <h3 class="card-label font-weight-bolder text-dark">Video Categories</h3>
-                                </div>
-                            </div>
-                            <!--end::Header-->
-                            <!--begin::Form-->
-                            
-                            
-                                <div class="card-body">
-                                    <form enctype="multipart/form-data" class="form" method="POST" action="{{ url('admin/videos/createcategory') }}">
-                                <!--begin::Body-->
-                                @csrf
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label class="lable-control">Category Name</label>
-                                                <input required type="text" class="form-control form-control-md form-control-solid" name="name">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <button type="submit" class="btn btn-primary mr-2">Add New Category</button>
-                                        </div>                                                        
-                                    </div>
-                                    </form>
-                                    <br>
-                                    <table class="table table-bordered">
-                                    @foreach(DB::table('video_categories')->orderby('id' , 'desc')->get() as $r)
-                                    <tr>
-                                        <td>{{ $r->name }}</td>
-                                        <td class="text-right pr-0">
-                                            <a data-toggle="modal" data-target="#updateModalcate{{ $r->id }}" href="javascript:;" class="btn btn-sm btn-clean btn-icon" title="Edit details">
-                                                 <i class="la la-edit"></i> 
-                                            </a>
-                                            <a data-toggle="modal" data-target="#deleteModalcate{{ $r->id }}" href="javascript:;" class="btn btn-sm btn-clean btn-icon" title="Delete">
-                                                <i class="la la-trash"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <div class="modal fade" id="updateModalcate{{ $r->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <form method="POST" action="{{ url('admin/videos/updatecategory') }}">
-                                            @csrf
-                                        <input type="hidden" value="{{ $r->id }}" name="id">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Update Category : {{ $r->name }}</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <i aria-hidden="true" class="ki ki-close"></i>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <label class="lable-control">Category Name</label>
-                                                            <input value="{{ $r->name }}" required type="text" class="form-control form-control-md form-control-solid" name="name">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Cancel</button>
-                                                    <button type="submit" class="btn btn-success font-weight-bold">Update Category</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        </form>
-                                    </div>
-                                    <div class="modal fade" id="deleteModalcate{{ $r->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <form method="POST" action="{{ url('admin/videos/deletecategory') }}">
-                                            @csrf
-                                        <input type="hidden" value="{{ $r->id }}" name="id">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Are you Sure you want to Delete this?</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <i aria-hidden="true" class="ki ki-close"></i>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    Are you Sure you want to Delete this Category if you Delete Category then all Video Will Be Deleted automaticaly against this Category?
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Cancel</button>
-                                                    <button type="submit" class="btn btn-danger font-weight-bold">Yes, Delete it</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        </form>
-                                    </div>
-                                    @endforeach
-                                </table>
-                                </div>
-                                <!--end::Body-->
-                            
-                            
-                            <!--end::Form-->
-                        </div>
-                    </div>
                 </div>
             </div>
             <!--end::Container-->
@@ -304,4 +206,103 @@
     </div>
 </div>
 <!--end::Content-->
+<div class="modal fade" id="allcategories" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog " role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">All Categories</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <i aria-hidden="true" class="ki ki-close"></i>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="">
+    <form enctype="multipart/form-data" class="form" method="POST" action="{{ url('admin/videos/createcategory') }}">
+<!--begin::Body-->
+@csrf
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label class="lable-control">Category Name</label>
+                <input required type="text" placeholder="Enter Category Name" class="form-control form-control-md form-control-solid" name="name">
+            </div>
+        </div>
+        <div class="col-md-12">
+            <button type="submit" class="btn btn-primary mr-2">Add New Category</button>
+        </div>                                                        
+    </div>
+    </form>
+    <br>
+    <table class="table table-bordered">
+    @foreach(DB::table('video_categories')->orderby('id' , 'desc')->get() as $r)
+    <tr>
+        <td>{{ $r->name }}</td>
+        <td class="text-right pr-0">
+            <a data-toggle="modal" data-target="#updateModalcate{{ $r->id }}" href="javascript:;" class="btn btn-sm btn-clean btn-icon" title="Edit details">
+                 <i class="la la-edit"></i> 
+            </a>
+            <a data-toggle="modal" data-target="#deleteModalcate{{ $r->id }}" href="javascript:;" class="btn btn-sm btn-clean btn-icon" title="Delete">
+                <i class="la la-trash"></i>
+            </a>
+        </td>
+    </tr>
+    <div class="modal fade" id="updateModalcate{{ $r->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form method="POST" action="{{ url('admin/videos/updatecategory') }}">
+            @csrf
+        <input type="hidden" value="{{ $r->id }}" name="id">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Update Category : {{ $r->name }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="lable-control">Category Name</label>
+                            <input value="{{ $r->name }}" required type="text" class="form-control form-control-md form-control-solid" name="name">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-success font-weight-bold">Update Category</button>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+    <div class="modal fade" id="deleteModalcate{{ $r->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form method="POST" action="{{ url('admin/videos/deletecategory') }}">
+            @csrf
+        <input type="hidden" value="{{ $r->id }}" name="id">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Are you Sure you want to Delete this?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you Sure you want to Delete this Category if you Delete Category then all Video Will Be Deleted automaticaly against this Category?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-danger font-weight-bold">Yes, Delete it</button>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+    @endforeach
+</table>
+</div>
+<!--end::Body-->
+        </div>
+    </div>
+</div>
+</div>
 @endsection

@@ -7,6 +7,7 @@
  <div class="container">
    <div class="main-outer video-outer">
      <div class="left-video">
+      <iframe src="https://view.officeapps.live.com/op/embed.aspx?src={{  url('public/images') }}/{{ $data->video }}" width='100%' height='600px' frameborder='0'>
        <img src="assets/images/slideshow-bigger.png" style="width:100%; height:320px">
        <div class="row mt-3">
          <div class="col-md-3">
@@ -24,7 +25,9 @@
        </div>
      </div>
      <div class="video-right-details">
-       <h6>Trading & Stats</h6>
+       <h6>Trading & Stats<br>
+        
+       </h6>
        <h2 class="mb-0">{{ $data->name }}</h2>
        <p>{{ $data->short_description }}</p>
      </div>
