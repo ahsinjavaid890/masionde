@@ -990,11 +990,11 @@ background: var(--white, #FFF);
     line-height: normal;
     text-transform: capitalize;
 }
-.pop-up-card {
+#showquiz {
     border-radius: 20px;
     background: var(--white, #FFF);
     box-shadow: 0px 24px 74px 0px rgba(0, 0, 0, 0.07);
-    width: 764px;
+    width: 825px;
     margin: 0 auto;
     padding: 43px 45px;
 }
@@ -1042,10 +1042,11 @@ background: var(--white, #FFF);
     padding-top: 9px;
 }
 .select-btn{
-        width: 100%;
+    cursor: pointer;
+    width: 100%;
     padding: 16px;
     border-radius: 10px;
-background: var(--gradient-light, linear-gradient(166deg, #EFEFEF 0%, #FFF1F1 100%));
+    background: var(--gradient-light, linear-gradient(166deg, #EFEFEF 0%, #FFF1F1 100%));
     margin-bottom: 20px;
 }
 .select-btn a {
@@ -1221,11 +1222,11 @@ canvas#chartId {
 }
 
 section.pop-up-sec {
-    display: none;
+/*    display: none;*/
 }
 
 div#step2 {
-    display: none;
+/*    display: none;*/
 }
 section.pop-up-sec {
     position: absolute;

@@ -18,6 +18,9 @@ use App\Models\slideshows;
 use App\Models\video_categories;
 use App\Models\slideshow_categories;
 use App\Models\quizzes;
+use App\Models\questions;
+use App\Models\answers;
+
 class AdminController extends Controller
 {
     function formatBytes($bytes) {
@@ -328,4 +331,86 @@ class AdminController extends Controller
     {
         return view('admin.quizzes.add');   
     }
+
+    public function createquiz(Request $request)
+    {
+        $add = new quizzes;
+        $add->name = $request->name;
+        if($request->image)
+        {
+            $add->image = Cmf::sendimagetodirectory($request->image);
+        }
+        $add->duration = $request->duration;
+        $add->short_description = $request->short_description;
+        $add->url = Cmf::shorten_url($request->name);
+        $add->status = 'In Active';
+        $add->save();
+        $url = url('admin/quizzes/addquestion').'/'.$add->id;
+        return Redirect::to($url);
+    }
+
+    public function updatequiz(Request $request)
+    {
+        $add = quizzes::find($request->id);
+        $add->name = $request->name;
+        if($request->image)
+        {
+            $add->image = Cmf::sendimagetodirectory($request->image);
+        }
+        $add->duration = $request->duration;
+        $add->short_description = $request->short_description;
+        $add->url = Cmf::shorten_url($request->name);
+        $add->status = $request->status;
+        $add->save();
+        return redirect()->back()->with('message', 'Quiz Updated Successfully');
+    }
+
+    public function addquestion($id)
+    {
+        $data = quizzes::find($id);
+        return view('admin.quizzes.addquestion')->with(array('data' => $data));
+    }
+
+    public function createquestion(Request $request)
+    {
+        $add = new questions;
+        $add->question = $request->question;
+        $add->quiz_id = $request->quiz_id;
+        $add->save();
+        foreach ($request->option as $r) {
+            $an = new answers;
+            $an->question_id = $add->id;
+            $an->answer = $r;
+            $an->save();
+        }
+
+        $per = 0;
+        foreach (answers::where('question_id' , $add->id)->orderby('id' , 'asc')->get() as $r) {
+            $per++;
+
+            if($per == $request->answer)
+            {
+                $add = questions::find($add->id);
+                $add->answer_id = $r->id;
+                $add->save();
+            }
+
+        }
+
+        if($request->type == 'saveandanotherquestion')
+        {
+            $url = url('admin/quizzes/addquestion').'/'.$request->quiz_id;
+            return Redirect::to($url);
+        }
+        if($request->type == 'saveandpublishquiz')
+        {
+
+            $quiz = quizzes::find($request->quiz_id);
+            $quiz->status = 'Active';
+            $quiz->save();
+            $url = url('admin/quizzes');
+            return Redirect::to($url);
+        }
+    }
+
 }

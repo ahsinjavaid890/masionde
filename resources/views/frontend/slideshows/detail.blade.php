@@ -33,7 +33,6 @@
    </div>
  </div>
 </section>
-
 <!-- main page end here -->
 <!-- video section start here -->
 <section class="video-sec">

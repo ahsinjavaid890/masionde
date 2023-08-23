@@ -29,7 +29,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ url('admin/quizzes/createquiz') }}">
+                        <form enctype="multipart/form-data" method="POST" action="{{ url('admin/quizzes/createquiz') }}">
                             @csrf
                             <div class="row">
                                 <div class="col-md-12">
@@ -41,24 +41,24 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="lable-control">Short Description</label>
-                                        <textarea name="short_description" required class="form-control form-control-md form-control-solid" rows="3"></textarea>
+                                        <textarea name="short_description" class="form-control form-control-md form-control-solid" rows="3"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="lable-control">Banner Image</label>
-                                        <input required type="file" class="form-control form-control-md form-control-solid" name="name">
+                                        <input type="file" accept=".png,.jpg,.jpeg,.webp" class="form-control form-control-md form-control-solid" name="image">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="lable-control">Quiz Duration (mins)</label>
-                                        <input required type="number" class="form-control form-control-md form-control-solid" name="name">
+                                        <input required type="number" class="form-control form-control-md form-control-solid" name="duration">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <input value="Next" type="submit" class="btn btn-primary" name="name">
+                                        <input value="Next" type="submit" class="btn btn-primary">
                                     </div>
                                 </div>
                             </div>

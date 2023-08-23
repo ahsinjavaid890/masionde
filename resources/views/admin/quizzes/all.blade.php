@@ -48,26 +48,90 @@
                                     <th scope="col">Questions</th>
                                     <th scope="col">Taken By Users</th>
                                     <th scope="col">Status</th>
+                                    <th scope="col">Add Question</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach($data as $r)
                                 <tr class="align-items-center">
                                     <td class="sorting_1 dtr-control">
-                                        Quiz Title Goes here
+                                        {{ $r->name }}
                                     </td>
-                                    <td>20</td>
+                                    <td>{{ DB::table('questions')->where('quiz_id' , $r->id)->count() }}</td>
                                     <td>3</td>
-                                    <td>Active</td>
+                                    <td>@if($r->status == 'In Active')<span class="badge badge-danger">{{ $r->status }}</span> @else <span class="badge badge-success">{{ $r->status }}</span> @endif</td>
+                                    <td><a class="btn btn-primary" href="{{ url('admin/quizzes/addquestion') }}/{{ $r->id }}">Add Question</a></td>
                                     <td nowrap="">
-                                        <a href="javascript:;" class="btn btn-sm btn-clean btn-icon" title="Edit details">
+                                        <a data-toggle="modal" data-target="#deleteModal{{ $r->id }}" href="javascript:void(0)" class="btn btn-sm btn-clean btn-icon" title="Edit details">
                                              <i class="la la-edit"></i> 
+                                        </a>
+                                        <!-- <a href="{{ url('admin/quizzes/viewquiz') }}/{{ $r->id }}" class="btn btn-sm btn-clean btn-icon" title="View details">
+                                             <i class="la la-eye"></i> 
                                         </a>
                                         <a href="javascript:;" class="btn btn-sm btn-clean btn-icon" title="Delete">
                                             <i class="la la-trash"></i>
-                                        </a>
+                                        </a> -->
                                     </td>
                                 </tr>
+                                <div class="modal fade" id="deleteModal{{ $r->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <form enctype="multipart/form-data" method="POST" action="{{ url('admin/quizzes/updatequiz') }}">
+                                    @csrf
+                                    <input type="hidden" value="{{ $r->id }}" name="id">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Update Quiz : {{ $r->name }}</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <i aria-hidden="true" class="ki ki-close"></i>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label class="lable-control">Quiz Title</label>
+                                                            <input value="{{ $r->name }}" required type="text" class="form-control form-control-md form-control-solid" name="name">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label class="lable-control">Short Description</label>
+                                                            <textarea name="short_description" class="form-control form-control-md form-control-solid" rows="3">{{ $r->short_description }}</textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label class="lable-control">Banner Image</label>
+                                                            <input type="file" accept=".png,.jpg,.jpeg,.webp" class="form-control form-control-md form-control-solid" name="image">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label class="lable-control">Quiz Duration (mins)</label>
+                                                            <input required type="number" value="{{ $r->duration }}" class="form-control form-control-md form-control-solid" name="duration">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label class="lable-control">Quiz Status</label>
+                                                            <select class="form-control" name="status">
+                                                                <option @if($r->status == 'In Active') selected @endif value="In Active">In Active</option>
+                                                                <option @if($r->status == 'Active') selected @endif value="Active">Active</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Cancel</button>
+                                                <button type="submit" class="btn btn-primary font-weight-bold">Update Quiz</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </form>
+                                </div>
+                                @endforeach
                             </tbody>
                         </table>
                         <!--end: Datatable-->
