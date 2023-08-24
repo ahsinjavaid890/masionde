@@ -3,24 +3,14 @@
 <title>{{ $data->name }}</title>
 @endsection
 @section('content')
-<link rel="stylesheet" href="{{ url('public/pptx/css/pptxjs.css') }}">
-<link rel="stylesheet" href="{{ url('public/pptx/css/nv.d3.min.css') }}">
-<script type="text/javascript" src="{{ url('public/pptx/js/jszip.min.js') }}"></script>
-<script type="text/javascript" src="{{ url('public/pptx/js/filereader.js') }}"></script>
-<script type="text/javascript" src="{{ url('public/pptx/js/d3.min.js') }}"></script>
-<script type="text/javascript" src="{{ url('public/pptx/js/nv.d3.min.js') }}"></script>
-<script type="text/javascript" src="{{ url('public/pptx/js/pptxjs.js') }}"></script>
-<script type="text/javascript" src="{{ url('public/pptx/js/divs2slides.js') }}"></script>
-<script type="text/javascript" src="{{ url('public/pptx/js/jquery.fullscreen-min.js') }}"></script>
 <section class="video-details-sec">
   <div class="container">
     <div class="main-outer video-outer">
       <div class="left-video">
-        <div id="result"></div>
+          <embed src="https://view.officeapps.live.com/op/view.aspx?src={{ url('public/images') }}/{{ $data->video }}#toolbar=0" style="width:100%; height:500px;">
       </div>
       <div class="video-right-details">
         <h6>Trading & Stats<br>
-
         </h6>
         <h2 class="mb-0">{{ $data->name }}</h2>
         <p>{{ $data->short_description }}</p>
