@@ -71,8 +71,14 @@
           <div class="left-chart">
             <div class="main-outer">
               <div class="left-chart-cntent">
-                <p>Your Quizzes</p>
-                <h2>90%</h2>
+                <p>Attempt Quizzes</p>
+                @php
+                  $llquizes = DB::table('quizzes')->where('status' , 'Active')->count();
+                  $userquizzes = DB::table('userquizes')->where('user_id' , Auth::user()->id)->where('status' , 'done')->count();
+
+                  $percentage = $userquizzes/$userquizzes;
+                @endphp
+                <h2>{{round($percentage*100, 0)}}%</h2>
               </div>
               <div class="left-chart-media">
                  <canvas id="chartId" aria-label="chart"></canvas>
@@ -222,6 +228,10 @@
    </div>
  </div>
 </section>
+
+@php
+    $userquizes = DB::table('userquizes')->where('user_id' , Auth::user()->id)->where('status' , 'done')->get();
+@endphp
 @endsection
 
 @section('script')
@@ -232,11 +242,11 @@
       var chartId = new Chart(chrt, {
          type: 'doughnut',
          data: {
-            labels: ["Quiz Title Goes 1", "Quiz Title Goes 2", "Quiz Title Goes 3"],
+            labels: [@foreach($userquizes as $r)"Quiz Goes {{ round($r->score/$r->total * 100 , 0) }} %" @if($loop->last) @else , @endif @endforeach],
             datasets: [{
             // label: "online tutorial subjects",
-            data: [50, 15, 15, 20],
-            backgroundColor: ['#e2c5e4', '#eecbb0', '#dfe5b6', '#ffff'],
+            data: [@foreach($userquizes as $r) {{ round($r->score/$r->total * 100 , 0) }} @if($loop->last) @else , @endif @endforeach],
+            backgroundColor: [@foreach($userquizes as $r) '#e2c5e4' @if($loop->last) @else , @endif @endforeach],
             hoverOffset: 5
             }],
          },

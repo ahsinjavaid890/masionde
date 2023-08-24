@@ -31,6 +31,12 @@ Route::get('/home',[HomeController::class, 'dashboard'])->name('userprofile');
 Route::name('user.')->prefix('')->group(function(){
     Route::get('/dashboard',[HomeController::class, 'dashboard'])->name('home');
     Route::get('/videos',[HomeController::class, 'videos'])->name('videos');
+    Route::get('/quizes',[HomeController::class, 'quizes'])->name('quizes');
+    Route::get('/profile',[HomeController::class, 'profile'])->name('profile');
+    Route::POST('/updateuserprofile', [HomeController::class, 'updateuserprofile']);
+    Route::get('/securitysettings',[HomeController::class, 'securitysettings'])->name('securitysettings');
+    Route::POST('/updateusersecurity', [HomeController::class, 'updateusersecurity']);
+    
     Route::get('/video/{id}',[HomeController::class, 'videodetail']);
     Route::get('/category/{id}',[HomeController::class, 'categorydetail']);
     Route::get('/slideshows',[HomeController::class, 'slideshows'])->name('slideshows');
@@ -39,6 +45,7 @@ Route::name('user.')->prefix('')->group(function(){
     Route::get('/quiz/{id}',[HomeController::class, 'quizdetail']);
     Route::get('/quiz/getuserquiz/{id}',[HomeController::class, 'getuserquiz']);
     Route::get('/quiz/savequiz/{id}/{value}/{question}',[HomeController::class, 'savequiz']);
+    Route::get('/clicknotification/{id}',[HomeController::class, 'clicknotification']);
     
 });
 Route::POST('/userlogin', [AuthUserController::class, 'login'])->name('user.login');
