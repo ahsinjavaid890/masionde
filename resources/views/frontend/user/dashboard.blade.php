@@ -93,7 +93,11 @@
                  <div class="quiz-left-inner">
                    <div class="quiz-inner-img">
                     <div class="quiz-media">
-                       <img src="{{ url('public/images') }}/{{ $r->image }}">
+                      @if($r->image)
+                      <img src="{{ url('public/images') }}/{{ $r->image }}">
+                      @else
+                      <img src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930">
+                      @endif
                     </div>
                    </div>
                  </div>
@@ -104,7 +108,11 @@
                </div>
              </div>
              <div class="quiz-btn">
-               <h5 class="my-popup">Take Quiz</h5>
+              @if(DB::table('userquizes')->where('user_id' , Auth::user()->id)->where('quiz_id', $r->id)->where('status' , 'done')->count() == 0)
+               <a href="{{ url('quiz') }}/{{ $r->url }}" class="my-popup">Take Quiz</a>
+               @else
+               <a href="{{ url('quiz') }}/{{ $r->url }}" class="my-popup">{{ DB::table('userquizes')->where('user_id' , Auth::user()->id)->where('quiz_id' , $r->id)->where('status' , 'done')->first()->score }} Out of {{ DB::table('userquizes')->where('user_id' , Auth::user()->id)->where('quiz_id' , $r->id)->where('status' , 'done')->first()->total }}</a>
+               @endif
              </div>
            </div>
            @endforeach

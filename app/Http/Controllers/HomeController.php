@@ -28,7 +28,13 @@ class HomeController extends Controller
         $quizzes = quizzes::orderby('id' , 'desc')->limit(4)->get();
         $total = userquizes::where('user_id' , Auth::user()->id)->where('status' , 'done')->sum('total');
         $score = userquizes::where('user_id' , Auth::user()->id)->where('status' , 'done')->sum('score');
-        $percentageofquizes = $score/$total;
+        if($score > 0)
+        {
+            $percentageofquizes = $score/$total;    
+        }else{
+            $percentageofquizes = 0;
+        }
+        
         return view('frontend.user.dashboard')->with(array('mywatchvideos' =>$mywatchvideos,'quizzes' =>$quizzes,'percentageofquizes' =>$percentageofquizes));
     }
     public function quizdetail($id)

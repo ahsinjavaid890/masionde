@@ -606,7 +606,9 @@ section.dashboard-sec {
 .quiz-right-inner p span {
     padding-left: 10px;
 }
-.quiz-btn h5{
+.quiz-btn a{
+    color: black;
+    text-decoration: none;
     border-radius: 31px;
     border: 1px solid var(--border, #EDEDED);
     background: var(--gradient-light, linear-gradient(166deg, #EFEFEF 0%, #FFF1F1 100%));
@@ -919,6 +921,7 @@ section.pop-up-sec {
     padding: 30px;
 }
 .cross-icon {
+    color: black;
     width: 42px;
     height: 42px;
     flex-shrink: 0;

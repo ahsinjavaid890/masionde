@@ -20,6 +20,7 @@ use App\Models\slideshow_categories;
 use App\Models\quizzes;
 use App\Models\questions;
 use App\Models\answers;
+use App\Models\user_notifications;
 
 class AdminController extends Controller
 {
@@ -404,7 +405,16 @@ class AdminController extends Controller
         }
         if($request->type == 'saveandpublishquiz')
         {
-
+            $user = User::all();
+            $quiz = quizzes::where('id' , $request->quiz_id)->first();
+            foreach ($user as $r) {
+                $noti = new user_notifications();
+                $noti->user_id  = $r->id;
+                $noti->url = url('quiz').'/'.$quiz->url;
+                $noti->notification = 'New Quiz Added';
+                $noti->status = 'new';
+                $noti->save();
+            }
             $quiz = quizzes::find($request->quiz_id);
             $quiz->status = 'Active';
             $quiz->save();

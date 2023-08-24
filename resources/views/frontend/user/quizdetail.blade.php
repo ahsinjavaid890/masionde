@@ -11,9 +11,9 @@
        <div class="row">
          <div class="col-md-12 pop-up-logo">
            <img src="{{ url('public/assets/images/logo.png') }}" class="img-fluid">
-           <div class="cross-icon">
+           <a href="" class="cross-icon">
              <i class="fa fa-times" aria-hidden="true"></i>
-           </div>
+           </a>
          </div>      
        </div>
        <div class="row mb-4">
