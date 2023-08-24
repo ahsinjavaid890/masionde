@@ -23,7 +23,7 @@
                     <div class="card-header flex-wrap py-5">
                         <div class="card-title">
                             <h3 class="card-label">
-                                Add Question : {{ $data->name }}
+                                Update Questions of : {{ $data->name }}
                             </h3>
                         </div>
                     </div>
@@ -33,7 +33,8 @@
                             <input type="hidden" value="{{ $data->id }}" name="quiz_id">
                             <input type="hidden" id="type" value="saveandanotherquestion" name="type">
                             <div class="row">
-                                <div class="col-md-12">
+                                @foreach(DB::table('questions')->where('quiz_id' , $data->id)->get() as $r) 
+                                <div class="col-md-12 mb-5">
                                     <div class="card">
                                         <div class="card-header">
                                             <h4>Question {{ DB::table('questions')->where('quiz_id' , $data->id)->count()+1 }}</h4>
@@ -79,6 +80,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                @endforeach
                                 <div class="col-md-3 mt-3">
                                     <div class="form-group">
                                         <button type="submit" style="display: none;" id="submitbutton"></button>

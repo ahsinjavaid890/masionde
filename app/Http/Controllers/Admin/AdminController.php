@@ -21,6 +21,7 @@ use App\Models\quizzes;
 use App\Models\questions;
 use App\Models\answers;
 use App\Models\user_notifications;
+use App\Models\userquizes;
 
 class AdminController extends Controller
 {
@@ -371,7 +372,6 @@ class AdminController extends Controller
         $data = quizzes::find($id);
         return view('admin.quizzes.addquestion')->with(array('data' => $data));
     }
-
     public function createquestion(Request $request)
     {
         $add = new questions;
@@ -423,4 +423,20 @@ class AdminController extends Controller
         }
     }
 
+    public function deletequiz(Request $request)
+    {
+        $question = questions::where('quiz_id' , $request->id)->get();
+        foreach ($question as $r) {
+            answers::where('question_id' , $r->id)->delete();
+        }
+        questions::where('quiz_id' , $request->id)->delete();
+        userquizes::where('quiz_id' , $request->id)->delete();
+        quizzes::where('id' , $request->id)->delete();
+        return redirect()->back()->with('message', 'Quiz Deleted Successfully');
+    }
+    public function viewquiz($id)
+    {
+        $data = quizzes::find($id);
+        return view('admin.quizzes.viewquiz')->with(array('data' => $data));
+    }
 }

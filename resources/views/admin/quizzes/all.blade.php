@@ -63,18 +63,41 @@
                                     <td>@if($r->status == 'In Active')<span class="badge badge-danger">{{ $r->status }}</span> @else <span class="badge badge-success">{{ $r->status }}</span> @endif</td>
                                     <td><a class="btn btn-primary" href="{{ url('admin/quizzes/addquestion') }}/{{ $r->id }}">Add Question</a></td>
                                     <td nowrap="">
-                                        <a data-toggle="modal" data-target="#deleteModal{{ $r->id }}" href="javascript:void(0)" class="btn btn-sm btn-clean btn-icon" title="Edit details">
+                                        <a data-toggle="modal" data-target="#updatemodal{{ $r->id }}" href="javascript:void(0)" class="btn btn-sm btn-clean btn-icon" title="Edit details">
                                              <i class="la la-edit"></i> 
                                         </a>
-                                        <!-- <a href="{{ url('admin/quizzes/viewquiz') }}/{{ $r->id }}" class="btn btn-sm btn-clean btn-icon" title="View details">
+                                        <a href="{{ url('admin/quizzes/viewquiz') }}/{{ $r->id }}" class="btn btn-sm btn-clean btn-icon" title="View details">
                                              <i class="la la-eye"></i> 
                                         </a>
-                                        <a href="javascript:;" class="btn btn-sm btn-clean btn-icon" title="Delete">
+                                        <a data-toggle="modal" data-target="#deleteModal{{ $r->id }}" href="javascript:;" class="btn btn-sm btn-clean btn-icon" title="Delete">
                                             <i class="la la-trash"></i>
-                                        </a> -->
+                                        </a>
                                     </td>
                                 </tr>
                                 <div class="modal fade" id="deleteModal{{ $r->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <form method="POST" action="{{ url('admin/quizzes/delete') }}">
+                                    @csrf
+                                <input type="hidden" value="{{ $r->id }}" name="id">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Are you Sure you want to Delete this?</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <i aria-hidden="true" class="ki ki-close"></i>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Are you Sure you want to Delete this Quiz If you Delete this Quiz then Automaticaly Deleted All Data Against This Quiz in User Panel Also?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Cancel</button>
+                                            <button type="submit" class="btn btn-danger font-weight-bold">Yes, Delete it</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                </form>
+                            </div>
+                                <div class="modal fade" id="updatemodal{{ $r->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <form enctype="multipart/form-data" method="POST" action="{{ url('admin/quizzes/updatequiz') }}">
                                     @csrf
                                     <input type="hidden" value="{{ $r->id }}" name="id">
