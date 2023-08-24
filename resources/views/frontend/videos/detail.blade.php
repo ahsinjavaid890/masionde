@@ -12,7 +12,7 @@
         </video>
        </div>
        <div class="video-right-details">
-         <h6>Trading & Stats</h6>
+         <h6>{{ DB::table('video_categories')->where('id' , $data->category_id)->first()->name }}</h6>
          <h2>{{ $data->name }}</h2>
          @if($data->duration)
          <span><i class="fa fa-clock-o" aria-hidden="true"></i> {{ $data->duration }} sec</span>

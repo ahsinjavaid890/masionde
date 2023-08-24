@@ -32,10 +32,12 @@
          @endphp
          <div class="watch-video-outer">
            <div class="video-left">
-             <div class="video-img">
-              <video>
-                <source src="{{ url('public/images') }}/{{ $video->video }}" type="video/mp4" />
-              </video>
+            <div class="video-img">
+              @if($video->image)
+               <img src="{{ url('public/images') }}/{{ $video->image }}">
+               @else
+               <img src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930">
+               @endif
              </div>
            </div>
            <div class="video-right">
