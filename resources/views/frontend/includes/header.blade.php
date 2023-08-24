@@ -31,9 +31,9 @@
                   <button class="notification-icon"><img src="{{ url('public/assets/images/notification-status.png') }}" alt="Notification"></button>
                   <div class="notification-dropdown">
                       <p>You have new notifications!</p>
-                      <a href="#">Notification 1</a>
-                      <a href="#">Notification 2</a>
-                      <a href="#">Notification 3</a>
+                      @foreach(DB::table('user_notifications')->where('user_id' , Auth::user()->id)->where('status' , 'new')->get() as $r)
+                        <a onclick="clicknotification({{$r->id}})" href="javascript:void(0)">{{ $r->notification }}</a>
+                      @endforeach
                   </div>
                </div>
                  <div class="profile">
@@ -61,3 +61,14 @@
         </div>
     </div>
 </header>
+<script type="text/javascript">
+  function clicknotification(id) {
+      $.ajax({
+          type: 'get',
+          url: "{{ url('clicknotification') }}/"+id,
+          success: function(response) {
+              $(location).attr('href',response);
+          }
+      });
+  }
+</script>
