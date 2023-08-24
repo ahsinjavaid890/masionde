@@ -13,20 +13,20 @@
 <script type="text/javascript" src="{{ url('public/pptx/js/divs2slides.js') }}"></script>
 <script type="text/javascript" src="{{ url('public/pptx/js/jquery.fullscreen-min.js') }}"></script>
 <section class="video-details-sec">
- <div class="container">
-   <div class="main-outer video-outer">
-     <div class="left-video">
-       <iframe src="https://onedrive.live.com/embed?resid=80F54E6B238F0B42%214482&amp;authkey=!ALnvbRverYY_jIQ&amp;em=2&amp;wdAr=1.3333333333333333" width="100%" height="388px" frameborder="0">This is an embedded <a target="_blank" href="https://office.com">Microsoft Office</a> presentation, powered by <a target="_blank" href="https://office.com/webapps">Office</a>.</iframe>
-     </div>
-     <div class="video-right-details">
-       <h6>Trading & Stats<br>
-        
-       </h6>
-       <h2 class="mb-0">{{ $data->name }}</h2>
-       <p>{{ $data->short_description }}</p>
-     </div>
-   </div>
- </div>
+  <div class="container">
+    <div class="main-outer video-outer">
+      <div class="left-video">
+        <div id="result"></div>
+      </div>
+      <div class="video-right-details">
+        <h6>Trading & Stats<br>
+
+        </h6>
+        <h2 class="mb-0">{{ $data->name }}</h2>
+        <p>{{ $data->short_description }}</p>
+      </div>
+    </div>
+  </div>
 </section>
 <!-- main page end here -->
 <!-- video section start here -->
@@ -40,21 +40,21 @@
     <div class="row">
       @FOREACH($relatedslideshow as $r)
       <div class="col-md-3 col-12">
-          <div class="video-cards">
-            <a href="{{ url('slideshow') }}/{{ $r->url }}">
-              <img src="{{ url('public/images') }}/{{ $r->image }}" class="img-fluid">
-              <h2>{{ $r->name }}</h2>
-              
-            </a>
-            <a class="downloadbutton" href="{{ url('public/images') }}/{{ $r->video }}" download="">Download</a>
-          </div>
+        <div class="video-cards">
+          <a href="{{ url('slideshow') }}/{{ $r->url }}">
+            <img src="{{ url('public/images') }}/{{ $r->image }}" class="img-fluid">
+            <h2>{{ $r->name }}</h2>
+
+          </a>
+          <a class="downloadbutton" href="{{ url('public/images') }}/{{ $r->video }}" download="">Download</a>
         </div>
+      </div>
       @endforeach
     </div>
   </div>
 </section>
 <script>
-$("#result").pptxToHtml({
+  $("#result").pptxToHtml({
   pptxFileUrl: "{{ url('public/images') }}/{{ $data->video }}",
   fileInputId: "uploadFileInput",
   slideMode: true,
@@ -79,6 +79,8 @@ $("#result").pptxToHtml({
 });
 </script>
 @endsection
+
+
 @section('script')
 
 @endsection

@@ -49,6 +49,9 @@ Route::name('user.')->prefix('')->group(function(){
     Route::get('/quiz/getuserquiz/{id}',[HomeController::class, 'getuserquiz']);
     Route::get('/quiz/savequiz/{id}/{value}/{question}',[HomeController::class, 'savequiz']);
     Route::get('/clicknotification/{id}',[HomeController::class, 'clicknotification']);
+
+
+    Route::get('/search',[HomeController::class, 'search']);
     
 });
 Route::POST('/userlogin', [AuthUserController::class, 'login'])->name('user.login');

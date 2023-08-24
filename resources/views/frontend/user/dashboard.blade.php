@@ -72,8 +72,13 @@
                 @php
                   $llquizes = DB::table('quizzes')->where('status' , 'Active')->count();
                   $userquizzes = DB::table('userquizes')->where('user_id' , Auth::user()->id)->where('status' , 'done')->count();
-
-                  $percentage = $userquizzes/$userquizzes;
+                  if($userquizzes > 0)
+                  {
+                    $percentage = $userquizzes/$userquizzes;
+                  }else{
+                    $percentage = 0;
+                  }
+                  
                 @endphp
                 <h2>{{round($percentage*100, 0)}}%</h2>
               </div>
