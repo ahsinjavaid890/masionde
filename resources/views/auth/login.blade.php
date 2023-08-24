@@ -23,6 +23,7 @@
              <div class="signin-card">
                <h2>Welcome Back,</h2>
                <p>Login to your account</p>
+               @include('alerts.index')
                @if(session()->has('error'))
                 <div style="text-align: center;color: red;" id="result">{{ session()->get('error') }}</div>
                 @endif

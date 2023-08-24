@@ -36,7 +36,7 @@
                  <div class="form-group row">
                      <label for="email_address" class="col-md-4 col-form-label ">Email</label>
                      <div class="col-md-12">
-                         <input type="text" id="email_address" placeholder="Your E-mail" class="form-control" name="email" required autofocus>
+                         <input type="text" id="email_address" placeholder="Your E-mail" class="form-control" name="email" required >
                          @if ($errors->has('email'))
                              <span class="text-danger">{{ $errors->first('email') }}</span>
                          @endif

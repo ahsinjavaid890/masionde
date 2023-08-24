@@ -24,6 +24,12 @@
              <div class="signin-card">
                 
                 <h2>Reset Password</h2>
+
+               @php
+                   $token =  collect(request()->segments())->last();
+               @endphp
+               
+                 
                
 
                 <form action="{{ route('reset.password.post') }}" method="POST">
@@ -33,7 +39,7 @@
                     <div class="form-group row">
                         <label for="email_address" class="col-md-12 col-form-label ">E-Mail Address</label>
                         <div class="col-md-12">
-                            <input type="text" id="email_address" class="form-control" name="email" required autofocus>
+                            <input type="text" id="email_address" value="{{ DB::table('password_resets')->where('token',$token)->first()->email }}" class="form-control" name="email" required readonly>
                             @if ($errors->has('email'))
                                 <span class="text-danger">{{ $errors->first('email') }}</span>
                             @endif
