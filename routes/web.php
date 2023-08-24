@@ -25,7 +25,10 @@ Auth::routes();
 Route::get('/home',[HomeController::class, 'dashboard'])->name('home');
 Route::get('/home',[HomeController::class, 'dashboard'])->name('userprofile');
 
-
+Route::get('forget-password', [AuthUserController::class, 'showForgetPasswordForm'])->name('forget.password.get');
+Route::post('forget-password', [AuthUserController::class, 'submitForgetPasswordForm'])->name('forget.password.post'); 
+Route::get('reset-password/{token}', [AuthUserController::class, 'showResetPasswordForm'])->name('reset.password.get');
+Route::post('reset-password', [AuthUserController::class, 'submitResetPasswordForm'])->name('reset.password.post');
 
 
 Route::name('user.')->prefix('')->group(function(){
