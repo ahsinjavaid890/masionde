@@ -3,25 +3,20 @@
 <title>{{ $data->name }}</title>
 @endsection
 @section('content')
+<link rel="stylesheet" href="{{ url('public/pptx/css/pptxjs.css') }}">
+<link rel="stylesheet" href="{{ url('public/pptx/css/nv.d3.min.css') }}">
+<script type="text/javascript" src="{{ url('public/pptx/js/jszip.min.js') }}"></script>
+<script type="text/javascript" src="{{ url('public/pptx/js/filereader.js') }}"></script>
+<script type="text/javascript" src="{{ url('public/pptx/js/d3.min.js') }}"></script>
+<script type="text/javascript" src="{{ url('public/pptx/js/nv.d3.min.js') }}"></script>
+<script type="text/javascript" src="{{ url('public/pptx/js/pptxjs.js') }}"></script>
+<script type="text/javascript" src="{{ url('public/pptx/js/divs2slides.js') }}"></script>
+<script type="text/javascript" src="{{ url('public/pptx/js/jquery.fullscreen-min.js') }}"></script>
 <section class="video-details-sec">
  <div class="container">
    <div class="main-outer video-outer">
      <div class="left-video">
-       <img src="assets/images/slideshow-bigger.png" style="width:100%; height:320px">
-       <div class="row mt-3">
-         <div class="col-md-3">
-           <img src="assets/images/slideshows1.png" class="img-fluid">
-         </div>
-         <div class="col-md-3">
-           <img src="assets/images/slideshows1.png" class="img-fluid">
-         </div>
-         <div class="col-md-3">
-           <img src="assets/images/slideshows1.png" class="img-fluid">
-         </div>
-         <div class="col-md-3">
-           <img src="assets/images/slideshows1.png" class="img-fluid">
-         </div>
-       </div>
+       <iframe src="https://onedrive.live.com/embed?resid=80F54E6B238F0B42%214482&amp;authkey=!ALnvbRverYY_jIQ&amp;em=2&amp;wdAr=1.3333333333333333" width="100%" height="388px" frameborder="0">This is an embedded <a target="_blank" href="https://office.com">Microsoft Office</a> presentation, powered by <a target="_blank" href="https://office.com/webapps">Office</a>.</iframe>
      </div>
      <div class="video-right-details">
        <h6>Trading & Stats<br>
@@ -58,27 +53,32 @@
     </div>
   </div>
 </section>
+<script>
+$("#result").pptxToHtml({
+  pptxFileUrl: "{{ url('public/images') }}/{{ $data->video }}",
+  fileInputId: "uploadFileInput",
+  slideMode: true,
+  keyBoardShortCut: true,
+  slideModeConfig: {  //on slide mode (slideMode: true)
+      first: 1, 
+      nav: true, /** true,false : show or not nav buttons*/
+      navTxtColor: "white", /** color */
+      navNextTxt:"&#8250;", //">"
+      navPrevTxt: "&#8249;", //"<"
+      showPlayPauseBtn: true,/** true,false */
+      keyBoardShortCut: true, /** true,false */
+      showSlideNum: true, /** true,false */
+      showTotalSlideNum: true, /** true,false */
+      autoSlide: true, /** false or seconds (the pause time between slides) , F8 to active(keyBoardShortCut: true) */
+      randomAutoSlide: true, /** true,false ,autoSlide:true */ 
+      loop: false,  /** true,false */
+      background: false, /** false or color*/
+      transition: "default", /** transition type: "slid","fade","default","random" , to show transition efects :transitionTime > 0.5 */
+      transitionTime: 1 /** transition time in seconds */
+  }
+});
+</script>
 @endsection
 @section('script')
-<script type="text/javascript">
-  $(document).ready(function() {
 
-    $(".video-right-content p").click(function(e) {
-      e.stopPropagation(); // Prevent event from bubbling up
-      console.log("working");
-      $(".filter-card").toggle();
-    });
-
-    // Prevent hiding when clicking inside the .filter-card
-    $(".filter-card").click(function(e) {
-      e.stopPropagation(); // Prevent event from bubbling up
-    });
-
-    // Hide pop-up when clicking anywhere else on the page
-    $("body").click(function() {
-      console.log("working cross");
-      $(".filter-card").hide();
-    });
-  });
-</script>
 @endsection
