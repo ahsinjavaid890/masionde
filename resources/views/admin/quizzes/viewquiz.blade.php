@@ -44,10 +44,12 @@
                                     <td class="sorting_1 dtr-control">
                                         {{ $r->question }}
                                     </td>
+                                
+                                   
                                     <td>{{ DB::table('answers')->where('question_id' , $r->id)->count() }}</td>
                                     <td>{{ DB::table('answers')->where('id' , $r->answer_id)->first()->answer }}</td>
                                     <td nowrap="">
-                                        <a href="javascript:void(0)" class="btn btn-sm btn-clean btn-icon" title="Edit details">
+                                        <a href="{{url('admin/quizzes/editquestion')}}/{{$r->id}}" class="btn btn-sm btn-clean btn-icon" title="Edit details">
                                              <i class="la la-edit"></i> 
                                         </a>
                                         <a data-toggle="modal" data-target="#deleteModal{{ $r->id }}" href="javascript:;" class="btn btn-sm btn-clean btn-icon" title="Delete">
