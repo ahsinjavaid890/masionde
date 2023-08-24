@@ -113,5 +113,8 @@ Route::name('admin.')->prefix('admin')->namespace('App\Http\Controllers\Admin')-
         Route::post('/updatequiz','AdminController@updatequiz');
         Route::post('/delete','AdminController@deletequiz');
         Route::get('/viewquiz/{id}','AdminController@viewquiz');
+        Route::get('/editquestion/{id}','AdminController@editquestion');
+        Route::post('/editquestion','AdminController@editquestionstore');
+        Route::get('/deleteanswer/{id}','AdminController@deleteanswer');
     });
 });

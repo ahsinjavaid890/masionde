@@ -29,8 +29,8 @@
                <form id="loginform" action="{{ route('user.login') }}" method="POST" id="form">
                                 @csrf
                  <div class="form-group">
-                  <label>eamil</label>
-                   <input id="email" autocomplete="off" value="@if(session()->has('email')){{ session()->get('email') }}  @endif" type="text" class="form-control" name="email" placeholder="Your E-mail">
+                  <label>Eamil</label>
+                   <input id="email" autocomplete="off" value="{{ old('email') }}" type="text" class="form-control" name="email" placeholder="Your E-mail">
                    @if($errors->has('email'))
                       <div style="color: red">{{ $errors->first('email') }}</div>
                   @endif

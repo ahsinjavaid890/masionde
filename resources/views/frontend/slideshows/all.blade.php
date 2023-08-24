@@ -33,9 +33,8 @@
         <div class="col-md-3 col-12">
           <div class="video-cards">
             <a href="{{ url('slideshow') }}/{{ $r->url }}">
-              <img src="{{ url('public/images') }}/{{ $r->image }}" class="img-fluid">
-              <h2>{{ $r->name }}</h2>
-              
+              <img src="{{ url('public/images') }}/{{ $r->image }}" style="width: 100%; height: 200px;" class="img-fluid">
+              <h2>{{ $r->name }}</h2>              
             </a>
             <a class="downloadbutton" href="{{ url('public/images') }}/{{ $r->video }}" download="">Download</a>
           </div>

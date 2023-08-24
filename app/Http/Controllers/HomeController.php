@@ -306,7 +306,7 @@ class HomeController extends Controller
     public function slideshowdetail($id)
     {
         $data = slideshows::where('url' , $id)->first();
-        $relatedslideshow = slideshows::where('category_id' , $data->category_id)->limit(4)->get();
+        $relatedslideshow = slideshows::where('category_id' , $data->category_id)->whereNotIn('id', [$data->id])->limit(4)->get();
         return view('frontend.slideshows.detail')->with(array('data' =>$data,'relatedslideshow' =>$relatedslideshow));
     }
     public function videos()
@@ -343,7 +343,7 @@ class HomeController extends Controller
             $newdata->video_id = $data->id;
             $newdata->save();
         }
-        $relatedvideos = videos::where('category_id' , $data->category_id)->limit(4)->get();
+        $relatedvideos = videos::where('category_id' , $data->category_id)->whereNotIn('id', [$data->id])->limit(4)->get();
         return view('frontend.videos.detail')->with(array('data' =>$data,'relatedvideos' =>$relatedvideos));
     }
 }

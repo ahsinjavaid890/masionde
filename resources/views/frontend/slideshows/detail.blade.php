@@ -27,7 +27,7 @@
        <h6>Trading & Stats<br>
         
        </h6>
-       <h2 class="mb-0">{{ url('public/images') }}/{{ $data->video }}</h2>
+       <h2 class="mb-0">{{ $data->name }}</h2>
        <p>{{ $data->short_description }}</p>
      </div>
    </div>

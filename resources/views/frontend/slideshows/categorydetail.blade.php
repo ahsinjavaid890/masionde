@@ -7,7 +7,7 @@
     <div class="container">
       <div class="video-main-outer">
         <div class="video-left-content">
-          <h2>Slideshows</h2>
+          <h2>{{ $category->name }}</h2>
         </div>
         <div class="video-right-content">
           <p> <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">

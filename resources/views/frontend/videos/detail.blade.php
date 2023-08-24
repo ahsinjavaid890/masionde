@@ -1,16 +1,15 @@
 @extends('frontend.layouts.main')
 @section('tittle')
-<title>Dashboard</title>
+<title>{{ $data->name }}</title>
 @endsection
 @section('content')
 <section class="video-details-sec">
    <div class="container">
      <div class="main-outer video-outer">
        <div class="left-video">
-         <video poster="@if($data->image) {{ url('public/images') }}/{{ $data->image }} @else https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930 @endif" style="height: 350px;" controls="">
-            <source src="{{ url('public/images') }}/{{ $data->video }}" type="video/mp4">
-            <source src="movie.ogg" type="video/ogg">
-          </video>
+         <video controls>
+          <source src="{{ url('public/images') }}/{{ $data->video }}" type="video/mp4" />
+        </video>
        </div>
        <div class="video-right-details">
          <h6>Trading & Stats</h6>
@@ -35,11 +34,9 @@
           <div class="col-md-3 col-12">
             <div class="video-cards">
               <a href="{{ url('video') }}/{{ $r->url }}">
-                @if($r->image)
-                <img src="{{ url('public/images') }}/{{ $r->image }}" class="img-fluid">
-                @else
-                <img src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930" class="img-fluid">
-                @endif
+                <video style="width: 100%;">
+                  <source src="{{ url('public/images') }}/{{ $r->video }}" type="video/mp4" />
+                </video>
                 <h2>{{ $r->name }}</h2>
                 @if($r->duration)
                 <span><i class="fa fa-clock-o" aria-hidden="true"></i> {{ $r->duration }} Sec</span>

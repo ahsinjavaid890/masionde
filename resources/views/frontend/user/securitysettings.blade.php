@@ -25,11 +25,11 @@
                   </div>
                   <div class="col-md-12">
                       <a style="text-decoration: none;" href="{{ url('securitysettings') }}" class="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1">
-                      <div class="pt-7 pb-7 pl-4 d-flex align-items-center mb-4 bg-white rounded p-4">
+                      <div class="pt-7 pb-7 pl-4 d-flex align-items-center mb-4 rounded p-4" style="background: var(--primary-gradient, linear-gradient(90deg, #8F181F 0%, #C92B35 100%));">
                           <span class="svg-icon svg-icon-xl pr-2">
-                              <i class="fa fa-cog text-muted"></i>
+                              <i class="fa fa-cog text-white"></i>
                           </span>
-                          <div class="text-muted font-weight-bold">Security Settings</div>
+                          <div class="text-white font-weight-bold">Security Settings</div>
                       </div>
                       </a>
                   </div>

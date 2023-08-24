@@ -15,11 +15,11 @@
               <div class="row">
                   <div class="col-md-12">
                       <a style="text-decoration: none;background-color: red" href="{{ url('profile') }}" class="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1">
-                      <div class="pt-7 pb-7 pl-4 d-flex align-items-center mb-4 bg-white rounded p-4">
+                      <div class="pt-7 pb-7 pl-4 d-flex align-items-center mb-4 rounded p-4" style="background: var(--primary-gradient, linear-gradient(90deg, #8F181F 0%, #C92B35 100%));">
                           <span class="svg-icon svg-icon-xl pr-2">
-                              <i class="fa fa-user text-muted"></i>
+                              <i class="fa fa-user text-white"></i>
                           </span>
-                          <div class="text-muted font-weight-bold">My Profile</div>
+                          <div class="text-white font-weight-bold">My Profile</div>
                       </div>
                       </a>
                   </div>

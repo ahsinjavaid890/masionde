@@ -33,11 +33,9 @@
       <div class="col-md-3 col-12">
         <div class="video-cards">
           <a href="{{ url('video') }}/{{ $r->url }}">
-          	@if($r->image)
-            <img src="{{ url('public/images') }}/{{ $r->image }}" class="img-fluid">
-            @else
-            <img src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930" class="img-fluid">
-            @endif
+            <video style="width: 100%;">
+              <source src="{{ url('public/images') }}/{{ $r->video }}" type="video/mp4" />
+            </video>
             <h2>{{ $r->name }}</h2>
             @if($r->duration)
             <span><i class="fa fa-clock-o" aria-hidden="true"></i> {{ $r->duration }} Sec</span>
@@ -50,26 +48,6 @@
     <div class="row">
         {!! $data->links('frontend.pagination') !!}
     </div>
-    <!-- <div class="row">
-      <div class="col-12">
-        <div class="paginations">
-          <ul>
-            <li>
-              <a href="#">
-                <i class="fa fa-angle-left" aria-hidden="true"></i>
-              </a>
-            </li>
-            <li><a href="" class="active">1</a></li>
-            <li><a href="">2</a></li>
-            <li>
-              <a href="#">
-                <i class="fa fa-angle-right" aria-hidden="true"></i>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div> -->
   </div>
 </section>
 @endsection

@@ -38,7 +38,7 @@ class AuthUserController extends Controller
             'password' => 'required',
         ]);
         if ($validator->fails()) {
-            return response()->json(['error'=>$validator->errors()->all()]);
+            return Redirect::back()->withErrors($validator);
         }
 
         if(auth()->attempt(array('email' => $request->email, 'password' => $request->password)))
