@@ -15,6 +15,7 @@ use App\Models\questions;
 use App\Models\answers;
 use App\Models\userquizes;
 use App\Models\userquizes_answers;
+use App\Models\user_positions;
 use App\Models\user_notifications;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -37,7 +38,6 @@ class HomeController extends Controller
     } else {
       $percentageofquizes = 0;
     }
-
     return view('frontend.user.dashboard')->with(array('mywatchvideos' => $mywatchvideos, 'quizzes' => $quizzes, 'percentageofquizes' => $percentageofquizes));
   }
   public function quizes()
@@ -227,13 +227,105 @@ class HomeController extends Controller
         }
       }
       $correctanswer =  $i;
-
       userquizes::where('user_id', Auth::user()->id)->where('quiz_id', $id)->update(array('score' => $correctanswer));
-
-
       $incorrectanswer = DB::table('questions')->where('quiz_id', $id)->count() - $i;
       $getpercentage = $i / DB::table('questions')->where('quiz_id', $id)->count();
       $fullpercentage = $getpercentage * 100;
+
+
+      $checkposition_data = user_positions::where('user_id' , Auth::user()->id)->count();
+
+      if($checkposition_data > 0)
+      {
+          $totalmarks =  userquizes::where('user_id', Auth::user()->id)->sum('total');
+          $obtainedmarks = userquizes::where('user_id', Auth::user()->id)->sum('score');
+          $percentage = $obtainedmarks/$totalmarks;
+          $percentage = $percentage*100;
+          $positionid = user_positions::where('user_id' , Auth::user()->id)->first();
+          $positiondata = user_positions::find($positionid->id);
+          $positiondata->percentage = round($percentage , 0);
+          $positiondata->save();
+
+          $updatenull = user_positions::all();
+
+          foreach ($updatenull as $r) {
+              $positiondata = user_positions::find($r->id);
+              $positiondata->position = '';
+              $positiondata->save();
+          }
+
+          $getuser_positions = user_positions::orderby('percentage' , 'desc')->limit(3)->get();      
+          $per = 0;
+          foreach ($getuser_positions as $r) {
+              $per++;
+              if($per == 1)
+              {
+                $positiondata = user_positions::find($r->id);
+                $positiondata->position = 'first';
+                $positiondata->save();
+              }
+              if($per == 2)
+              {
+                $positiondata = user_positions::find($r->id);
+                $positiondata->position = 'second';
+                $positiondata->save();
+              }
+              if($per == 3)
+              {
+                $positiondata = user_positions::find($r->id);
+                $positiondata->position = 'third';
+                $positiondata->save();
+              }
+          }
+
+      }else{
+        $totalmarks =  userquizes::where('user_id', Auth::user()->id)->sum('total');
+        $obtainedmarks = userquizes::where('user_id', Auth::user()->id)->sum('score');
+        $percentage = $obtainedmarks/$totalmarks;
+        $percentage = $percentage*100;
+        $positiondata = new user_positions;
+        $positiondata->user_id = Auth::user()->id;
+        $positiondata->percentage = round($percentage , 0);
+        $positiondata->save();
+
+        $updatenull = user_positions::all();
+
+          foreach ($updatenull as $r) {
+              $positiondata = user_positions::find($r->id);
+              $positiondata->position = '';
+              $positiondata->save();
+          }
+
+        $getuser_positions = user_positions::orderby('percentage' , 'desc')->limit(3)->get();
+        
+        $per = 0;
+        foreach ($getuser_positions as $r) {
+            $per++;
+            if($per == 1)
+            {
+              $positiondata = user_positions::find($r->id);
+              $positiondata->position = 'first';
+              $positiondata->save();
+            }
+            if($per == 2)
+            {
+              $positiondata = user_positions::find($r->id);
+              $positiondata->position = 'second';
+              $positiondata->save();
+            }
+            if($per == 3)
+            {
+              $positiondata = user_positions::find($r->id);
+              $positiondata->position = 'third';
+              $positiondata->save();
+            }
+        }
+
+
+      }
+
+
+
       echo '<div class="container">
                    <div class="row">
                      <div class="col-md-12">

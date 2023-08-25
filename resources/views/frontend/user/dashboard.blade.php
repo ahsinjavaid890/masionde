@@ -129,101 +129,103 @@
           </div>
         </div>
         <div class="col-md-5 col-12">
+
+          @php
+            $firstposition = DB::table('user_positions')->where('position' , 'first')->first();
+            $secondposition = DB::table('user_positions')->where('position' , 'second')->first();
+            $thirdposition = DB::table('user_positions')->where('position' , 'third')->first();
+            if($firstposition)
+            {
+              $firstuser = DB::table('users')->where('id' , $firstposition->user_id)->first();
+            }
+            if($secondposition)
+            {
+              $seconduser = DB::table('users')->where('id' , $secondposition->user_id)->first();
+            }
+            if($thirdposition)
+            {
+              $thirduser = DB::table('users')->where('id' , $thirdposition->user_id)->first();
+            }
+          @endphp
+
           <div class="position-card">
             <div class="main-outer">
+              @if($secondposition)
               <div class="sec-postion firt-position">
                 <div class="sec-postion-media">
-                  <img src="assets/images/position.png">
-                  <h6>Jhon</h6>
+                  @if($seconduser->profileimage)
+                  <img src="{{ url('public/images') }}/{{ $seconduser->profileimage }}">
+                  @else
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930">
+                  @endif
+                  <h6>{{ $seconduser->name }}</h6>
                 </div>
                 <div >
                   <div class="position-number"><h2>2nd</h2></div>
                 </div>
               </div>
+              @endif
+              @if($firstposition)
               <div class="sec-postion two-position">
                 <div class="sec-postion-media">
-                  <img src="assets/images/position.png">
-                  <h6>Jhon</h6>
+                  @if($firstuser->profileimage)
+                  <img src="{{ url('public/images') }}/{{ $firstuser->profileimage }}">
+                  @else
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930">
+                  @endif
+                  <h6>{{ $firstuser->name }}</h6>
                 </div>
                 <div >
                   <div class="position-number"><h2>1st</h2></div>
                 </div>
               </div>
+              @endif
+              @if($thirdposition)
               <div class="sec-postion three-position">
                 <div class="sec-postion-media">
-                  <img src="assets/images/position.png">
-                  <h6>Jhon</h6>
+                  @if($thirduser->profileimage)
+                  <img src="{{ url('public/images') }}/{{ $thirduser->profileimage }}">
+                  @else
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930">
+                  @endif
+                  <h6>{{ $thirduser->name }}</h6>
                 </div>
                 <div >
                   <div class="position-number"><h2>3nd</h2></div>
                 </div>
               </div>
+              @endif
             </div>
             <div class="row">
+              @php
+                $positioncount = 3;
+              @endphp
+              @foreach(DB::table('user_positions')->orderby('percentage')->where('position' , '')->limit(4)->get() as $r)
+              @php
+                $user = DB::table('users')->where('id' , $r->user_id)->first();
+                $positioncount++;
+              @endphp
               <div class="main-outer postion-user-bod">
                 <div class="left-contents">
                   <div class="left-contents-inner">
                     <div class="postion-user-media">
-                      <img src="assets/images/position-user.png">
+                      @if($user->profileimage)
+                      <img style="width: 100%; height: 100%;border-radius: 50%" src="{{ url('public/images') }}/{{ $user->profileimage }}">
+                      @else
+                      <img style="width: 100%;height: 100%;border-radius: 50%" src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930">
+                      @endif
                     </div>
                     <div class="position-user-details">
-                      <h2>Ricky Hunt</h2>
-                      <p>90%</p>
+                      <h2>{{ $user->name }}</h2>
+                      <p>{{ $r->percentage }}%</p>
                     </div>
                   </div>
                 </div>
                 <div class="right-contents">
-                  <h2>4th</h2>
+                  <h2>{{$positioncount}}th</h2>
                 </div>
               </div>
-              <div class="main-outer postion-user-bod">
-                <div class="left-contents">
-                  <div class="left-contents-inner">
-                    <div class="postion-user-media">
-                      <img src="assets/images/position-user.png">
-                    </div>
-                    <div class="position-user-details">
-                      <h2>Ricky Hunt</h2>
-                      <p>90%</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="right-contents">
-                  <h2>4th</h2>
-                </div>
-              </div>
-              <div class="main-outer postion-user-bod">
-                <div class="left-contents">
-                  <div class="left-contents-inner">
-                    <div class="postion-user-media">
-                      <img src="assets/images/position-user.png">
-                    </div>
-                    <div class="position-user-details">
-                      <h2>Ricky Hunt</h2>
-                      <p>90%</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="right-contents">
-                  <h2>4th</h2>
-                </div>
-              </div>
-              <div class="main-outer postion-user-bod">
-                <div class="left-contents">
-                  <div class="left-contents-inner">
-                    <div class="postion-user-media">
-                      <img src="assets/images/position-user.png">
-                    </div>
-                    <div class="position-user-details">
-                      <h2>Ricky Hunt</h2>
-                      <p>90%</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="right-contents">
-                  <h2>4th</h2>
-                </div>
-              </div>
+              @endforeach
             </div>
           </div>
         </div>

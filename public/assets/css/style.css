@@ -639,7 +639,7 @@ section.dashboard-sec {
     cursor: pointer;
 }
 .sec-postion-media {
-    width: 53px;
+/*    width: 53px;*/
     height: 53px;
     flex-shrink: 0;
     border-radius: 53px;

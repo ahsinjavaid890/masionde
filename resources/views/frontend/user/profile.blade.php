@@ -68,7 +68,7 @@
                       <div class="col-md-6">
                           <div class="form-group">
                               <label for="lastname">Profile Image</label>
-                              <input type="file" class="form-control" placeholder="Phone No"
+                              <input accept=".png,.jpg,.jpeg,.webp" type="file" class="form-control" placeholder="Phone No"
                                   name="profileimage">
                           </div>
                       </div>
