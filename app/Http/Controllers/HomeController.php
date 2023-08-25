@@ -30,7 +30,7 @@ class HomeController extends Controller
   public function dashboard()
   {
     $mywatchvideos = mywatchvideos::orderby('id', 'desc')->where('user_id', Auth::user()->id)->limit(4)->get();
-    $quizzes = quizzes::orderby('id', 'desc')->limit(4)->get();
+    $quizzes = quizzes::orderby('id', 'desc')->where('status' , 'Active')->limit(4)->get();
     $total = userquizes::where('user_id', Auth::user()->id)->where('status', 'done')->sum('total');
     $score = userquizes::where('user_id', Auth::user()->id)->where('status', 'done')->sum('score');
     if ($score > 0) {
@@ -42,7 +42,7 @@ class HomeController extends Controller
   }
   public function quizes()
   {
-    $data = quizzes::orderby('id', 'desc')->get();
+    $data = quizzes::orderby('id', 'desc')->where('status' , 'Active')->get();
     return view('frontend.user.quizes')->with(array('data' => $data));
   }
   public function profile()

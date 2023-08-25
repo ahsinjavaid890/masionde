@@ -178,8 +178,8 @@ class AdminController extends Controller
         $update->phonenumber = $request->phonenumber;
         $update->about_me = $request->about_me;
         $update->status = $request->status;
-        if ($request->password) {
-
+        if($request->password) 
+        {
             $update->password = Hash::make($request->password);
         }
         if ($request->profileimage) {

@@ -68,7 +68,7 @@
                         <input type="password" name="password" class="form-control" autocomplete="false"  placeholder="Password">
                     </div>
                     <div class="form-group">
-                        <input type="submit" name="password" value="Update Agent" class="btn btn-primary" placeholder="Password">
+                        <input type="submit" value="Update User" class="btn btn-primary" placeholder="Password">
                     </div>
                 </div>
             </div>

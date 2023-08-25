@@ -56,7 +56,7 @@
                                                     </div>
                                                     <div class="col-xl-2">
                                                         <label class="checkbox checkbox-lg">
-                                                            <input type="radio" value="1" name="answer"/>
+                                                            <input required type="radio" value="1" name="answer"/>
                                                             <span></span> &nbsp
                                                             Answer
                                                         </label>
