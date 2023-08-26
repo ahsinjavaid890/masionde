@@ -122,5 +122,10 @@ Route::name('admin.')->prefix('admin')->namespace('App\Http\Controllers\Admin')-
         Route::get('/editquestion/{id}','AdminController@editquestion');
         Route::post('/editquestion','AdminController@editquestionstore');
         Route::get('/deleteanswer/{id}','AdminController@deleteanswer');
+        Route::get('/addanswer/{id}','AdminController@addanswer');
+        Route::get('/saveanswer/{value}/{id}/{questionid}','AdminController@saveanswer');
+        Route::get('/removeoption/{value}/{id}','AdminController@removeoption');
+
+        Route::post('/deletequestion','AdminController@deletequestion');
     });
 });

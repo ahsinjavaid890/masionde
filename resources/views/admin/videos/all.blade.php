@@ -216,7 +216,7 @@
             </button>
         </div>
         <div class="modal-body">
-            <div class="">
+            <div class="" style="overflow: auto;height: 400px;overflow-x: hidden;">
     <form enctype="multipart/form-data" class="form" method="POST" action="{{ url('admin/videos/createcategory') }}">
     <!--begin::Body-->
     @csrf

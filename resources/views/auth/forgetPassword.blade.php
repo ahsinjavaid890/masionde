@@ -51,9 +51,14 @@
                       <i class="fa fa-arrow-right" aria-hidden="true"></i>
                     </div>
                   </button>
-               
+               <div class="row mt-4">
+                    <div class="col-md-12 text-center">
+                        <a href="{{ url('') }}">Login</a>
+                    </div>
+                </div>
              </form>
               
+
                
              </div>
            </div>

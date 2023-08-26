@@ -1,5 +1,5 @@
 @extends('admin.layouts.main-layout')
-@section('title','Add Question')
+@section('title','All Questions')
 
 @section('adminbeardcumb')
 <li class="breadcrumb-item">
@@ -58,7 +58,7 @@
                                     </td>
                                 </tr>
                                 <div class="modal fade" id="deleteModal{{ $r->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <form method="POST" action="{{ url('admin/quizzes/delete') }}">
+                                <form method="POST" action="{{ url('admin/quizzes/deletequestion') }}">
                                     @csrf
                                 <input type="hidden" value="{{ $r->id }}" name="id">
                                 <div class="modal-dialog" role="document">

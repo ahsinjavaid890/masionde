@@ -27,6 +27,7 @@
                       <path d="M16.5 17.0626C16.3575 17.0626 16.215 17.0101 16.1025 16.8976L14.6025 15.3976C14.385 15.1801 14.385 14.8201 14.6025 14.6026C14.82 14.3851 15.18 14.3851 15.3975 14.6026L16.8975 16.1026C17.115 16.3201 17.115 16.6801 16.8975 16.8976C16.785 17.0101 16.6425 17.0626 16.5 17.0626Z" fill="#5E5E5E"/>
                     </svg>
                 </div>
+              </form>
                 <div class="notification">
                   <button class="notification-icon"><img src="{{ url('public/assets/images/notification-status.png') }}" alt="Notification"></button>
                   <div class="notification-dropdown">
@@ -52,7 +53,7 @@
                       </div>
                   </div>
 
-              </form>
+              
               <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
             @csrf
         </form>

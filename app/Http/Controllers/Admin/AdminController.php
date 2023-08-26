@@ -22,6 +22,9 @@ use App\Models\questions;
 use App\Models\answers;
 use App\Models\user_notifications;
 use App\Models\userquizes;
+use App\Models\mywatchvideos;
+use App\Models\user_positions;
+use App\Models\userquizes_answers;
 
 class AdminController extends Controller
 {
@@ -41,37 +44,35 @@ class AdminController extends Controller
     }
     public function createcategory(Request $request)
     {
-        if ($request->tablename = 'slideshow_categories') {
+        if ($request->tablename == 'slideshow_categories') {
             $add = new slideshow_categories;
+            $add->name = $request->name;
+            $add->url = Cmf::shorten_url($request->name);
+            $add->save();
         } else {
             $add = new video_categories;
+            $add->name = $request->name;
+            $add->url = Cmf::shorten_url($request->name);
+            $add->save();
         }
-
-        $add->name = $request->name;
-        $add->url = Cmf::shorten_url($request->name);
-        $add->save();
         return redirect()->back()->with('message', 'Category Added Successfully');
     }
     public function updatecategory(Request $request)
     {
 
-        if($request->tablename = 'slideshow_categories')
+        if($request->tablename == 'slideshow_categories')
         {
-            $add = slideshow_categories::find($request->id);    
+            slideshow_categories::where('id' , $request->id)->update(array('name' => $request->name,'url' => Cmf::shorten_url($request->name)));
         }
-        if($request->tablename = 'video_categories'){
-            $add = video_categories::find($request->id);
+        if($request->tablename == 'video_categories'){
+            video_categories::where('id' , $request->id)->update(array('name' => $request->name,'url' => Cmf::shorten_url($request->name)));
         }
-
-        $add->name = $request->name;
-        $add->url = Cmf::shorten_url($request->name);
-        $add->save();
         return redirect()->back()->with('message', 'Category Updated Successfully');
     }
 
     public function deletecategory(Request $request)
     {
-        if ($request->tablename = 'slideshow_categories') {
+        if ($request->tablename == 'slideshow_categories') {
             slideshows::where('category_id', $request->id)->delete();
             slideshow_categories::where('id', $request->id)->delete();
         } else {
@@ -135,6 +136,7 @@ class AdminController extends Controller
     }
     public function deletevideo(Request $request)
     {
+        mywatchvideos::where('video_id' , $request->id)->delete();
         videos::where('id', $request->id)->delete();
         return redirect()->back()->with('message', 'Video Deleted Successfully');
     }
@@ -163,6 +165,10 @@ class AdminController extends Controller
     }
     public function deleteuser(Request $request)
     {
+        userquizes::where('user_id' , $request->id)->delete();
+        user_notifications::where('user_id' , $request->id)->delete();
+        user_positions::where('user_id' , $request->id)->delete();
+        mywatchvideos::where('user_id' , $request->id)->delete();
         DB::table('users')->where('id', $request->id)->delete();
         return redirect()->back()->with('message', 'User Deleted Successfully');
     }
@@ -280,7 +286,7 @@ class AdminController extends Controller
             $create->image = Cmf::sendimagetodirectory($request->image);
         }
         $create->save();
-        return redirect()->back()->with('message', 'Video Uploaded Successfully');
+        return redirect()->back()->with('message', 'Slide Show Uploaded Successfully');
     }
     public function updateslideshow(Request $request)
     {
@@ -298,7 +304,7 @@ class AdminController extends Controller
             $create->image = Cmf::sendimagetodirectory($request->image);
         }
         $create->save();
-        return redirect()->back()->with('message', 'Video Updated Successfully');
+        return redirect()->back()->with('message', 'Slide Show Updated Successfully');
     }
     public function searchslideshow(Request $request)
     {
@@ -308,7 +314,7 @@ class AdminController extends Controller
     public function deleteslideshow(Request $request)
     {
         slideshows::where('id', $request->id)->delete();
-        return redirect()->back()->with('message', 'Video Deleted Successfully');
+        return redirect()->back()->with('message', 'Slide Show Deleted Successfully');
     }
     public function editslideshow($id)
     {
@@ -366,28 +372,27 @@ class AdminController extends Controller
     }
     public function createquestion(Request $request)
     {
+        if($request->question)
+        {
+            $add = new questions;
+            $add->question = $request->question;
+            $add->quiz_id = $request->quiz_id;
+            $add->save();
+            foreach ($request->option as $r) {
+                $an = new answers;
+                $an->question_id = $add->id;
+                $an->answer = $r;
+                $an->save();
+            }
+            $per = 0;
+            foreach (answers::where('question_id', $add->id)->orderby('id', 'asc')->get() as $r) {
+                $per++;
 
-
-
-        $add = new questions;
-        $add->question = $request->question;
-        $add->quiz_id = $request->quiz_id;
-        $add->save();
-        foreach ($request->option as $r) {
-            $an = new answers;
-            $an->question_id = $add->id;
-            $an->answer = $r;
-            $an->save();
-        }
-
-        $per = 0;
-        foreach (answers::where('question_id', $add->id)->orderby('id', 'asc')->get() as $r) {
-            $per++;
-
-            if ($per == $request->answer) {
-                $add = questions::find($add->id);
-                $add->answer_id = $r->id;
-                $add->save();
+                if ($per == $request->answer) {
+                    $add = questions::find($add->id);
+                    $add->answer_id = $r->id;
+                    $add->save();
+                }
             }
         }
 
@@ -425,6 +430,11 @@ class AdminController extends Controller
         quizzes::where('id', $request->id)->delete();
         return redirect()->back()->with('message', 'Quiz Deleted Successfully');
     }
+    public function deletequestion(Request $request)
+    {
+        questions::where('id', $request->id)->delete();
+        return redirect()->back()->with('message', 'Question Deleted Successfully');
+    }
     public function viewquiz($id)
     {
         $data = quizzes::find($id);
@@ -435,71 +445,115 @@ class AdminController extends Controller
         $data = questions::find($id);
         return view('admin.quizzes.editquestion')->with(array('data' => $data));
     }
+    public function removeoption($answerid , $questionid)
+    {
+        answers::where('id' , $answerid)->delete();
+        $data = answers::where('question_id' , $questionid)->get();
+        $question = questions::where('id' , $questionid)->first();
+        foreach ($data as $a) {
+            echo '<div class="row">
+                <div class="col-xl-9">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input id="option'.$a->id.'" name="option[]" value="'.$a->answer.'" type="text" class="form-control form-control-solid h-auto p-5 border-0 rounded-lg font-size-h6">
+                            <div class="input-group-append">
+                                <span id="savecheck'.$a->id.'" onclick="saveanswer('.$a->id.' , '.$questionid.')" class="btn'; if($a->answer){ echo ' btn-success '; }else{ echo ' btn-primary '; }  echo' " type="button"><i class="fa fa-check"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="d-flex justify-content-between">
+                        <label class="checkbox checkbox-lg">
+                            <input'; if($question->answer_id == $a->id){ echo " checked "; } echo' type="radio" value="'.$a->id.'" name="answer"/> <span></span> &nbsp
+                            Answer
+                        </label>
+                        <div>
+                            <span id="removebutton'.$a->id.'" onclick="removeoption('.$a->id.','.$questionid.')" class="btn btn-primary btn-sm">Remove</span>
+                        </div>
+                    </div>
 
+                </div>
+            </div>';
+        }
+    }
+    public function addanswer($id)
+    {
+        $uestionid = $id;
+        $an = new answers;
+        $an->question_id = $id;
+        $an->save();
+        echo '<div class="row">
+                <div class="col-xl-9">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input id="option'.$an->id.'" name="option[]" value="'.$an->answer.'" type="text" class="form-control form-control-solid h-auto p-5 border-0 rounded-lg font-size-h6">
+                            <div class="input-group-append">
+                                <span id="savecheck'.$an->id.'" onclick="saveanswer('.$an->id.' , '.$id.')" class="btn'; if($an->answer){ echo ' btn-success '; }else{ echo ' btn-primary '; }  echo' " type="button"><i class="fa fa-check"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="d-flex justify-content-between">
+                        <label class="checkbox checkbox-lg">
+                            <input type="radio" value="'.$an->id.'" name="answer"/> <span></span> &nbsp
+                            Answer
+                        </label>
+                        <div>
+                            <span id="removebutton'.$an->id.'" onclick="removeoption('.$an->id.' , '.$id.')" class="btn btn-primary btn-sm">Remove</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>';
+    }
+
+
+    public function saveanswer($value , $answerid , $questionid)
+    {
+        $an = answers::find($answerid);
+        $an->answer = $value;
+        $an->save();
+
+        $question = questions::where('id' , $questionid)->first();
+
+        $data = answers::where('question_id' , $questionid)->get();
+        foreach ($data as $a) {
+            echo '<div class="row">
+                <div class="col-xl-9">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input id="option'.$a->id.'" name="option[]" value="'.$a->answer.'" type="text" class="form-control form-control-solid h-auto p-5 border-0 rounded-lg font-size-h6">
+                            <div class="input-group-append">
+                                <span id="savecheck'.$a->id.'" onclick="saveanswer('.$a->id.' , '.$questionid.')" class="btn'; if($a->answer){ echo ' btn-success '; }else{ echo ' btn-primary '; }  echo' " type="button"><i class="fa fa-check"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="d-flex justify-content-between">
+                        <label class="checkbox checkbox-lg">
+                            <input'; if($question->answer_id == $a->id){ echo " checked "; } echo' type="radio" value="'.$a->id.'" name="answer"/> <span></span> &nbsp
+                            Answer
+                        </label>
+                        <div>
+                            <span id="removebutton'.$a->id.'" onclick="removeoption('.$a->id.','.$questionid.')" class="btn btn-primary btn-sm">Remove</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>';
+        }
+
+    }
 
     public function editquestionstore(Request $request)
     {
-        // echo "<pre>";
-        // print_r($request->all());
-        // die;
-
-        $question_id = $request->question_id;
-        $add =  questions::find($question_id);
+        $add =  questions::find($request->question_id);
         $add->question = $request->question;
-        $add->quiz_id = $request->quiz_id;
+        $add->answer_id = $request->answer;
         $add->save();
-
-        // answers::where('question_id', $request->question_id)->delete();
-
-
-        // foreach ($request->option as $r) {
-        //     $an = new answers;
-        //     $an->question_id = $add->id;
-        //     $an->answer = $r;
-        //     $an->save();
-        // }
-
-
-        $previous_id = $request->previous_id;
-
-        foreach ($request->option as $key => $value) {
-
-            
-            $answer = $value;
-
-            echo $previous_id[$key];
-         
-
-            // if (isset($previous_id[$key])) {
-
-            //     $an = answers::find($key);
-            //     $an->answer = $answer;
-            //     $an->save();
-
-            // } else {
-
-            //     $an = new answers;
-            //     $an->question_id = $add->id;
-            //     $an->answer = $answer;
-            //     $an->save();
-            // }
-        }
-        
-
-
-
-        // $per = 0;
-        // foreach (answers::where('question_id' , $add->id)->orderby('id' , 'asc')->get() as $r) {
-        //     $per++;
-        //     if($per == $request->answer)
-        //     {
-        //         $add = questions::find($add->id);
-        //         $add->answer_id = $r->id;
-        //         $add->save();
-        //     }
-
-        // }
-
         return redirect()->back()->with('message', "Question Updated Successfully");
     }
 

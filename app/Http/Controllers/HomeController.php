@@ -29,16 +29,28 @@ class HomeController extends Controller
   }
   public function dashboard()
   {
-    $mywatchvideos = mywatchvideos::orderby('id', 'desc')->where('user_id', Auth::user()->id)->limit(4)->get();
-    $quizzes = quizzes::orderby('id', 'desc')->where('status' , 'Active')->limit(4)->get();
-    $total = userquizes::where('user_id', Auth::user()->id)->where('status', 'done')->sum('total');
-    $score = userquizes::where('user_id', Auth::user()->id)->where('status', 'done')->sum('score');
-    if ($score > 0) {
-      $percentageofquizes = $score / $total;
-    } else {
-      $percentageofquizes = 0;
+
+    if(Auth::check())
+    {
+        if(Auth::user()->type == 'admin')
+        {
+            return redirect()->route('admin.dashboard');
+        }else{
+            $mywatchvideos = mywatchvideos::orderby('id', 'desc')->where('user_id', Auth::user()->id)->limit(4)->get();
+            $quizzes = quizzes::orderby('id', 'desc')->where('status' , 'Active')->limit(4)->get();
+            $total = userquizes::where('user_id', Auth::user()->id)->where('status', 'done')->sum('total');
+            $score = userquizes::where('user_id', Auth::user()->id)->where('status', 'done')->sum('score');
+            if ($score > 0) {
+              $percentageofquizes = $score / $total;
+            } else {
+              $percentageofquizes = 0;
+            }
+            return view('frontend.user.dashboard')->with(array('mywatchvideos' => $mywatchvideos, 'quizzes' => $quizzes, 'percentageofquizes' => $percentageofquizes));
+        }
+        
+    }else{
+        return redirect()->route('login');  
     }
-    return view('frontend.user.dashboard')->with(array('mywatchvideos' => $mywatchvideos, 'quizzes' => $quizzes, 'percentageofquizes' => $percentageofquizes));
   }
   public function quizes()
   {
@@ -346,7 +358,7 @@ class HomeController extends Controller
                       <div id="showquiz" class="mt-5">
                             <div class="pop-up-card pop-card-two" id="step2">
                                 <div role="progressbar" aria-valuenow="' . round($fullpercentage, 0) . '" aria-valuemin="0" aria-valuemax="100" style="--value:' . round($fullpercentage, 0) . '"></div>
-                                 <p>Congratulations !</p>
+                                 <p>'; if(round($fullpercentage, 0) > 50) { echo ' Congratulations !'; }else{ echo ' Better Luck Next Time !'; } echo'</p>
                                  <h2>You have attempted ' . DB::table('questions')->where('quiz_id', $id)->count() . ' questions out of ' . DB::table('questions')->where('quiz_id', $id)->count() . '</h2>
                                  <div class="main-outer-result">
                                    <div class="result-inner">

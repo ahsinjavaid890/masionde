@@ -10,8 +10,8 @@
           <embed src="https://view.officeapps.live.com/op/view.aspx?src={{ url('public/images') }}/{{ $data->video }}#toolbar=0" style="width:100%; height:500px;">
       </div>
       <div class="video-right-details">
-        <h6>{{ DB::table('slideshow_categories')->where('id' , $data->category_id)->first()->name }}<br>
-        </h6>
+        <a href="{{ url('slidecategory') }}/{{ DB::table('slideshow_categories')->where('id' , $data->category_id)->first()->url }}" style="text-decoration: none;color: #212529;font-size: 22px;margin-bottom: 20px;">{{ DB::table('slideshow_categories')->where('id' , $data->category_id)->first()->name }}<br>
+        </a>
         <h2 class="mb-0">{{ $data->name }}</h2>
         <p>{{ $data->short_description }}</p>
       </div>

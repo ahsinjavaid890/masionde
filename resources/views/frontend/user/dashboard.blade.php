@@ -72,11 +72,11 @@
               <div class="left-chart-cntent">
                 <p>Attempt Quizzes</p>
                 @php
-                  $llquizes = DB::table('quizzes')->where('status' , 'Active')->count();
+                  $allquizes = DB::table('quizzes')->where('status' , 'Active')->count();
                   $userquizzes = DB::table('userquizes')->where('user_id' , Auth::user()->id)->where('status' , 'done')->count();
                   if($userquizzes > 0)
                   {
-                    $percentage = $userquizzes/$userquizzes;
+                    $percentage = $userquizzes/$allquizes;
                   }else{
                     $percentage = 0;
                   }
@@ -97,6 +97,7 @@
            <h2>Latest Quizzes</h2>
            <p></p>
            @foreach($quizzes as $r)
+           @if(DB::table('questions')->where('quiz_id' , $r->id)->count() > 0)
            <div class="main-outer quiz-outer">
              <div class="quiz-left">
                <div class="main-outer">
@@ -125,6 +126,7 @@
                @endif
              </div>
            </div>
+           @endif
            @endforeach
           </div>
         </div>
@@ -293,8 +295,8 @@ var data = {
     labels: ["", "", "", "", "", ""], // Empty labels for no x-axis labels
     datasets: [
         {
-            data: [240, 360, 700, 250, 180, 160], // Heights of columns
-            backgroundColor: ["#f8f0f0", "#f8f0f0", "#af232b", "#f8f0f0", "#f8f0f0", "#f8f0f0"], // Colors for columns
+            data: [@foreach($userquizes as $r) {{ round($r->score/$r->total * 100 , 0) }} @if($loop->last) @else , @endif @endforeach], // Heights of columns
+            backgroundColor: [@foreach($userquizes as $r) "#af232b" @if($loop->last) @else , @endif @endforeach], // Colors for columns
         },
     ],
 };
@@ -333,10 +335,5 @@ var chart = new Chart(canvas, {
         },
     },
 });
-
-
-
-
-
-   </script>
+</script>
 @endsection

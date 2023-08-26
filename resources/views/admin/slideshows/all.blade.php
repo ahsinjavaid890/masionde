@@ -103,7 +103,7 @@
                                                             </button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            Are you Sure you want to Delete this Video?
+                                                            Are you Sure you want to Delete this slide Show?
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Cancel</button>
@@ -184,7 +184,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label class="lable-control">Banner Image (png,jpg,jpeg,webp)</label>
-                                                <input type="file" class="form-control form-control-md form-control-solid" name="image">
+                                                <input type="file" accept=".png,.jpg,.jpeg,.webp" class="form-control form-control-md form-control-solid" name="image">
                                             </div>
                                         </div>
                                         <div class="col-md-12">

@@ -83,16 +83,16 @@
                                                     </span>
                                                 </td>
                                                 <td class="text-right pr-0">
-                                                    <a href="{{ url('admin/videos/edit') }}/{{ $video->id }}" class="btn btn-sm btn-clean btn-icon" title="Edit details">
+                                                    <a href="{{ url('admin/slideshows/edit') }}/{{ $video->id }}" class="btn btn-sm btn-clean btn-icon" title="Edit details">
                                                          <i class="la la-edit"></i> 
                                                     </a>
-                                                    <a data-toggle="modal" data-target="#deleteModal{{ $video->id }}" href="javascript:;" class="btn btn-sm btn-clean btn-icon" title="Delete">
+                                                    <!-- <a data-toggle="modal" data-target="#deleteModal{{ $video->id }}" href="javascript:;" class="btn btn-sm btn-clean btn-icon" title="Delete">
                                                         <i class="la la-trash"></i>
-                                                    </a>
+                                                    </a> -->
                                                 </td>
                                             </tr>
                                             <div class="modal fade" id="deleteModal{{ $video->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <form method="POST" action="{{ url('admin/videos/delete') }}">
+                                                <form method="POST" action="{{ url('admin/slideshows/delete') }}">
                                                     @csrf
                                                 <input type="hidden" value="{{ $video->id }}" name="id">
                                                 <div class="modal-dialog" role="document">
@@ -104,7 +104,7 @@
                                                             </button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            Are you Sure you want to Delete this Video?
+                                                            Are you Sure you want to Delete this Slide Show?
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Cancel</button>
@@ -147,7 +147,7 @@
                                                     </span>
                                                 </td>
                                                 <td class="text-right pr-0">
-                                                    <a href="{{ url('admin/videos/edit') }}/{{ $r->id }}" class="btn btn-sm btn-clean btn-icon" title="Edit details">
+                                                    <a href="{{ url('admin/slideshows/edit') }}/{{ $r->id }}" class="btn btn-sm btn-clean btn-icon" title="Edit details">
                                                          <i class="la la-edit"></i> 
                                                     </a>
                                                     <a data-toggle="modal" data-target="#deleteModal{{ $r->id }}" href="javascript:;" class="btn btn-sm btn-clean btn-icon" title="Delete">
@@ -156,7 +156,7 @@
                                                 </td>
                                             </tr>
                                             <div class="modal fade" id="deleteModal{{ $r->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <form method="POST" action="{{ url('admin/videos/delete') }}">
+                                                <form method="POST" action="{{ url('admin/slideshows/delete') }}">
                                                     @csrf
                                                 <input type="hidden" value="{{ $r->id }}" name="id">
                                                 <div class="modal-dialog" role="document">
@@ -168,7 +168,7 @@
                                                             </button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            Are you Sure you want to Delete this Slideshow?
+                                                            Are you Sure you want to Delete this slide Show?
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Cancel</button>
@@ -241,7 +241,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label class="lable-control">Banner Image (png,jpg,jpeg,webp)</label>
-                                                <input type="file" class="form-control form-control-md form-control-solid" name="image">
+                                                <input type="file" accept=".png,.jpg,.jpeg,.webp" class="form-control form-control-md form-control-solid" name="image">
                                             </div>
                                         </div>
                                         <div class="col-md-12">

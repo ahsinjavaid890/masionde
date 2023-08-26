@@ -59,7 +59,7 @@
                                         {{ $r->name }}
                                     </td>
                                     <td>{{ DB::table('questions')->where('quiz_id' , $r->id)->count() }}</td>
-                                    <td>3</td>
+                                    <td>{{ DB::table('userquizes')->where('quiz_id' , $r->id)->where('status' , 'done')->count() }}</td>
                                     <td>@if($r->status == 'In Active')<span class="badge badge-danger">{{ $r->status }}</span> @else <span class="badge badge-success">{{ $r->status }}</span> @endif</td>
                                     <td><a class="btn btn-primary" href="{{ url('admin/quizzes/addquestion') }}/{{ $r->id }}">Add Question</a></td>
                                     <td nowrap="">
