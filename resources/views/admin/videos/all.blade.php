@@ -36,10 +36,12 @@
                             <!--begin::Body-->
                             <div class="card-body py-0 mt-n3">
                                 <!--begin::Table-->
+                                <button class="btn btn-sm btn-danger">Delete Multiple</button>
                                 <div class="table-responsive">
                                     <table class="table table-borderless">
                                         <thead>
                                             <tr>
+                                                <th class="p-0" style="width: 30px"></th>
                                                 <th class="p-0" style="width: 50px"></th>
                                                 <th class="p-0" style="min-width: 150px"></th>
                                                 <th class="p-0" style="min-width: 120px"></th>
@@ -49,47 +51,58 @@
                                         </thead>
                                         <tbody>
                                             @if($data->count() > 0)
+                                            <form method="POST" action="{{ url('admin/videos/multipledelete') }}">
+                                                @csrf
                                             @foreach($data as $r)
-                                            <tr>
-                                                <td class="pl-0">
-                                                    <div class="symbol symbol-50 symbol-fixed mr-2 mt-2">
-                                                        @if($r->image)
-                                                        <div class="symbol-label" style="background-image: url('{{ url("public/images") }}/{{ $r->image  }}')"></div>
-                                                        @else
-                                                        <div class="symbol-label" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930')"></div>
-                                                        @endif
-                                                    </div>
-                                                </td>
-                                                <td class="pl-0">
-                                                    <a href="{{ url('video') }}/{{ $r->url }}" class="text-dark font-weight-bolder text-hover-primary mb-1 font-size-lg">{{ $r->name }}</a>
-                                                    <span class="text-muted font-weight-bold d-block">Size: {{ $r->filesize }}</span>
-                                                </td>
-                                                
-                                                <td class="text-right">
-                                                    <span class="text-muted font-weight-bold d-block">
-                                                        Uploaded on
-                                                    </span>
-                                                    <span class="text-dark-75 font-weight-bolder d-block font-size-lg">
-                                                        {{ Cmf::date_format($r->created_at) }}
-                                                    </span>
-                                                </td>
-                                                <td class="text-right">
-                                                    <span class="text-muted font-weight-bold d-block">
-                                                        By
-                                                    </span>
-                                                    <span class="text-dark-75 font-weight-bolder d-block font-size-lg">
-                                                        Admin
-                                                    </span>
-                                                </td>
-                                                <td class="text-right pr-0">
-                                                    <a href="{{ url('admin/videos/edit') }}/{{ $r->id }}" class="btn btn-sm btn-clean btn-icon" title="Edit details">
-                                                         <i class="la la-edit"></i> 
-                                                    </a>
-                                                    <a data-toggle="modal" data-target="#deleteModal{{ $r->id }}" href="javascript:;" class="btn btn-sm btn-clean btn-icon" title="Delete">
-                                                        <i class="la la-trash"></i>
-                                                    </a>
-                                                </td>
-                                            </tr>
+
+                                                <tr>
+                                                    <td class="datatable-cell-center datatable-cell datatable-cell-check">
+                                                        <span style="width: 20px;">
+                                                            <label style="margin-top:20px;" class="checkbox checkbox-single">
+                                                                <input type="checkbox" name="delteid[]" value="{{ $r->id }}">&nbsp;<span></span>
+                                                            </label>
+                                                        </span>
+                                                    </td>
+                                                    <td class="pl-0">
+                                                        <div class="symbol symbol-50 symbol-fixed mr-2 mt-2">
+                                                            @if($r->image)
+                                                            <div class="symbol-label" style="background-image: url('{{ url("public/images") }}/{{ $r->image  }}')"></div>
+                                                            @else
+                                                            <div class="symbol-label" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930')"></div>
+                                                            @endif
+                                                        </div>
+                                                    </td>
+                                                    <td class="pl-0">
+                                                        <a href="{{ url('video') }}/{{ $r->url }}" class="text-dark font-weight-bolder text-hover-primary mb-1 font-size-lg">{{ $r->name }}</a>
+                                                        <span class="text-muted font-weight-bold d-block">Size: {{ $r->filesize }}</span>
+                                                    </td>
+                                                    
+                                                    <td class="text-right">
+                                                        <span class="text-muted font-weight-bold d-block">
+                                                            Uploaded on
+                                                        </span>
+                                                        <span class="text-dark-75 font-weight-bolder d-block font-size-lg">
+                                                            {{ Cmf::date_format($r->created_at) }}
+                                                        </span>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <span class="text-muted font-weight-bold d-block">
+                                                            By
+                                                        </span>
+                                                        <span class="text-dark-75 font-weight-bolder d-block font-size-lg">
+                                                            Admin
+                                                        </span>
+                                                    </td>
+                                                    <td class="text-right pr-0">
+                                                        <a href="{{ url('admin/videos/edit') }}/{{ $r->id }}" class="btn btn-sm btn-clean btn-icon" title="Edit details">
+                                                             <i class="la la-edit"></i> 
+                                                        </a>
+                                                        <a data-toggle="modal" data-target="#deleteModal{{ $r->id }}" href="javascript:;" class="btn btn-sm btn-clean btn-icon" title="Delete">
+                                                            <i class="la la-trash"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            
                                             <div class="modal fade" id="deleteModal{{ $r->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <form method="POST" action="{{ url('admin/videos/delete') }}">
                                                     @csrf
@@ -114,6 +127,7 @@
                                                 </form>
                                             </div>
                                             @endforeach
+                                            </form>
                                             @else
 
                                                 <div class="text-center mt-5" style="font-size:22px">No Videos Found</div>
@@ -308,4 +322,7 @@
     </div>
 </div>
 </div>
+
+
+
 @endsection

@@ -26,6 +26,7 @@
        <div class="watch-video-card">
          <h3>Watched Videos</h3>
          <p></p>
+         @if($mywatchvideos->count() > 0)
          @foreach($mywatchvideos as $r)
          @php
           $video = DB::table('videos')->where('id' , $r->video_id)->first();
@@ -49,6 +50,9 @@
            </div>
          </div>
          @endforeach
+         @else
+          <p>No Watched Videos</p>
+         @endif
        </div>
      </div>
      <div class="col-md-8 col-12">
@@ -96,6 +100,7 @@
           <div class="latest-quiz-card">
            <h2>Latest Quizzes</h2>
            <p></p>
+           @if($quizzes->count() > 0)
            @foreach($quizzes as $r)
            @if(DB::table('questions')->where('quiz_id' , $r->id)->count() > 0)
            <div class="main-outer quiz-outer">
@@ -128,6 +133,9 @@
            </div>
            @endif
            @endforeach
+           @else
+            <p>No Quizzes</p>
+           @endif
           </div>
         </div>
         <div class="col-md-5 col-12">
