@@ -1,5 +1,5 @@
 @extends('admin.layouts.main-layout')
-@section('title','All Quizzes')
+@section('title', 'All Quizzes')
 
 @section('adminbeardcumb')
 <li class="breadcrumb-item">
@@ -26,6 +26,7 @@
                         </div>
                         <div class="card-toolbar">
                             <!--begin::Button-->
+
                             <a href="{{ url('admin/quizzes/addnew') }}" class="btn btn-primary font-weight-bolder">
                                 <span class="svg-icon svg-icon-md">
                                     <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -40,10 +41,29 @@
                             <!--end::Button-->
                         </div>
                     </div>
-                    <div class="card-body">
+
+                    <div class="card-body pt-3 ">
+
+                        <button type="submit" class="btn btn-sm btn-danger" onclick="multipleDeleteQuizzes()">Delete
+                            Multiple</button>
+                        <script>
+                            function multipleDeleteQuizzes() {
+                                var checked = $("input:checked").length > 0;
+                                if (!checked) {
+                                    alert("Please check at least one checkbox");
+                                    return false;
+                                } else {
+                                    $('#multipleDeleteQuizzes').submit();
+                                }
+
+                            }
+
+                        </script>
+
                         <table class="table table-separate table-head-custom table-checkable" id="userTable">
                             <thead>
                                 <tr>
+                                    <th scope="col"></th>
                                     <th scope="col">Quiz Title</th>
                                     <th scope="col">Questions</th>
                                     <th scope="col">Taken By Users</th>
@@ -53,108 +73,54 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($data as $r)
-                                <tr class="align-items-center">
-                                    <td class="sorting_1 dtr-control">
-                                        {{ $r->name }}
-                                    </td>
-                                    <td>{{ DB::table('questions')->where('quiz_id' , $r->id)->count() }}</td>
-                                    <td>{{ DB::table('userquizes')->where('quiz_id' , $r->id)->where('status' , 'done')->count() }}</td>
-                                    <td>@if($r->status == 'In Active')<span class="badge badge-danger">{{ $r->status }}</span> @else <span class="badge badge-success">{{ $r->status }}</span> @endif</td>
-                                    <td><a class="btn btn-primary" href="{{ url('admin/quizzes/addquestion') }}/{{ $r->id }}">Add Question</a></td>
-                                    <td nowrap="">
-                                        <a data-toggle="modal" data-target="#updatemodal{{ $r->id }}" href="javascript:void(0)" class="btn btn-sm btn-clean btn-icon" title="Edit details">
-                                             <i class="la la-edit"></i> 
-                                        </a>
-                                        <a href="{{ url('admin/quizzes/viewquiz') }}/{{ $r->id }}" class="btn btn-sm btn-clean btn-icon" title="View details">
-                                             <i class="la la-eye"></i> 
-                                        </a>
-                                        <a data-toggle="modal" data-target="#deleteModal{{ $r->id }}" href="javascript:;" class="btn btn-sm btn-clean btn-icon" title="Delete">
-                                            <i class="la la-trash"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <div class="modal fade" id="deleteModal{{ $r->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <form method="POST" action="{{ url('admin/quizzes/delete') }}">
+                                @if ($data->count() > 0)
+                                <form method="POST" id="multipleDeleteQuizzes" action="{{ url('admin/quizzes/multipledeleteQuizzes') }}">
                                     @csrf
-                                <input type="hidden" value="{{ $r->id }}" name="id">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Are you Sure you want to Delete this?</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <i aria-hidden="true" class="ki ki-close"></i>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            Are you Sure you want to Delete this Quiz If you Delete this Quiz then Automaticaly Deleted All Data Against This Quiz in User Panel Also?
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Cancel</button>
-                                            <button type="submit" class="btn btn-danger font-weight-bold">Yes, Delete it</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                </form>
-                            </div>
-                                <div class="modal fade" id="updatemodal{{ $r->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <form enctype="multipart/form-data" method="POST" action="{{ url('admin/quizzes/updatequiz') }}">
-                                    @csrf
-                                    <input type="hidden" value="{{ $r->id }}" name="id">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Update Quiz : {{ $r->name }}</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <i aria-hidden="true" class="ki ki-close"></i>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <label class="lable-control">Quiz Title</label>
-                                                            <input value="{{ $r->name }}" required type="text" class="form-control form-control-md form-control-solid" name="name">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <label class="lable-control">Short Description</label>
-                                                            <textarea name="short_description" class="form-control form-control-md form-control-solid" rows="3">{{ $r->short_description }}</textarea>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <label class="lable-control">Banner Image</label>
-                                                            <input type="file" accept=".png,.jpg,.jpeg,.webp" class="form-control form-control-md form-control-solid" name="image">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <label class="lable-control">Quiz Duration (mins)</label>
-                                                            <input required type="number" value="{{ $r->duration }}" class="form-control form-control-md form-control-solid" name="duration">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <label class="lable-control">Quiz Status</label>
-                                                            <select class="form-control" name="status">
-                                                                <option @if($r->status == 'In Active') selected @endif value="In Active">In Active</option>
-                                                                <option @if($r->status == 'Active') selected @endif value="Active">Active</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Cancel</button>
-                                                <button type="submit" class="btn btn-primary font-weight-bold">Update Quiz</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    </form>
-                                </div>
+                                    @foreach ($data as $r)
+                                    <tr class="align-items-center">
+
+                                        <td class="datatable-cell-center datatable-cell datatable-cell-check">
+                                            <span style="width: 20px;">
+                                                <label style="margin-top:20px;" class="checkbox checkbox-single">
+                                                    <input type="checkbox" name="delteid[]" value="{{ $r->id }}">&nbsp;<span></span>
+                                                </label>
+                                            </span>
+                                        </td>
+
+                                        <td class="sorting_1 dtr-control">
+                                            {{ $r->name }}
+                                        </td>
+                                        <td>{{ DB::table('questions')->where('quiz_id', $r->id)->count() }}
+                                        </td>
+                                        <td>{{ DB::table('userquizes')->where('quiz_id', $r->id)->where('status', 'done')->count() }}
+                                        </td>
+                                        <td>
+                                            @if ($r->status == 'In Active')
+                                            <span class="badge badge-danger">{{ $r->status }}</span>
+                                            @else
+                                            <span class="badge badge-success">{{ $r->status }}</span>
+                                            @endif
+                                        </td>
+                                        <td><a class="btn btn-primary" href="{{ url('admin/quizzes/addquestion') }}/{{ $r->id }}">Add
+                                                Question</a></td>
+                                        <td nowrap="">
+                                            <a href="{{ url('admin/quizzes/editquiz') }}/{{ $r->id }}" class="btn btn-sm btn-clean btn-icon" title="Edit details">
+                                                <i class="la la-edit"></i>
+                                            </a>
+                                            <a href="{{ url('admin/quizzes/viewquiz') }}/{{ $r->id }}" class="btn btn-sm btn-clean btn-icon" title="View details">
+                                                <i class="la la-eye"></i>
+                                            </a>
+                                            <a onclick="showdeletemodal({{ $r->id }})" href="javascript:;" class="btn btn-sm btn-clean btn-icon" title="Delete">
+                                                <i class="la la-trash"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
                                 @endforeach
+                             </form>
+                             @else
+
+                             <div class="text-center mt-5" style="font-size:22px">No Quiz Found</div>
+                                @endif
                             </tbody>
                         </table>
                         <!--end: Datatable-->
@@ -167,4 +133,35 @@
         <!--end::Entry-->
     </div>
 </div>
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <form method="POST" action="{{ url('admin/quizzes/delete') }}">
+        @csrf
+        <input type="hidden" id="deleteid" name="id">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Are you Sure you want to Delete this?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you Sure you want to Delete this Quiz If you Delete this Quiz then Automaticaly Deleted All Data
+                    Against This Quiz in User Panel Also?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-danger font-weight-bold">Yes, Delete it</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    function showdeletemodal(id) {
+        $('#deleteid').val(id);
+        $('#deleteModal').modal('show');
+    }
+
+</script>
 @endsection

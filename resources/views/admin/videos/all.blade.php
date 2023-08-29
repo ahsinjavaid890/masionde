@@ -36,7 +36,21 @@
                             <!--begin::Body-->
                             <div class="card-body py-0 mt-n3">
                                 <!--begin::Table-->
-                                <button class="btn btn-sm btn-danger">Delete Multiple</button>
+
+                            <button type="submit" class="btn btn-sm btn-danger" onclick="multipleDelete()">Delete Multiple</button>
+                                <script>
+                                    function multipleDelete()
+                                    {
+                                        var checked = $("input:checked").length > 0;
+                                        if (!checked){
+                                            alert("Please check at least one checkbox");
+                                            return false;
+                                        }else{
+                                            $('#multipleDelete').submit();
+                                        }
+
+                                    }
+                                </script>
                                 <div class="table-responsive">
                                     <table class="table table-borderless">
                                         <thead>
@@ -51,7 +65,7 @@
                                         </thead>
                                         <tbody>
                                             @if($data->count() > 0)
-                                            <form method="POST" action="{{ url('admin/videos/multipledelete') }}">
+                                            <form method="POST" id="multipleDelete"  action="{{ url('admin/videos/multipledelete') }}">
                                                 @csrf
                                             @foreach($data as $r)
 
@@ -76,7 +90,7 @@
                                                         <a href="{{ url('video') }}/{{ $r->url }}" class="text-dark font-weight-bolder text-hover-primary mb-1 font-size-lg">{{ $r->name }}</a>
                                                         <span class="text-muted font-weight-bold d-block">Size: {{ $r->filesize }}</span>
                                                     </td>
-                                                    
+
                                                     <td class="text-right">
                                                         <span class="text-muted font-weight-bold d-block">
                                                             Uploaded on
@@ -95,37 +109,15 @@
                                                     </td>
                                                     <td class="text-right pr-0">
                                                         <a href="{{ url('admin/videos/edit') }}/{{ $r->id }}" class="btn btn-sm btn-clean btn-icon" title="Edit details">
-                                                             <i class="la la-edit"></i> 
+                                                             <i class="la la-edit"></i>
                                                         </a>
-                                                        <a data-toggle="modal" data-target="#deleteModal{{ $r->id }}" href="javascript:;" class="btn btn-sm btn-clean btn-icon" title="Delete">
+                                                        <a onclick="showdeletemodal({{ $r->id }})" href="javascript:;" class="btn btn-sm btn-clean btn-icon" title="Delete">
                                                             <i class="la la-trash"></i>
                                                         </a>
                                                     </td>
                                                 </tr>
-                                            
-                                            <div class="modal fade" id="deleteModal{{ $r->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <form method="POST" action="{{ url('admin/videos/delete') }}">
-                                                    @csrf
-                                                <input type="hidden" value="{{ $r->id }}" name="id">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Are you Sure you want to Delete this?</h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <i aria-hidden="true" class="ki ki-close"></i>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            Are you Sure you want to Delete this Video?
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Cancel</button>
-                                                            <button type="submit" class="btn btn-danger font-weight-bold">Yes, Delete it</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                </form>
-                                            </div>
+
+
                                             @endforeach
                                             </form>
                                             @else
@@ -135,7 +127,7 @@
                                             @endif
                                         </tbody>
                                     </table>
-                                    
+
                                 </div>
                                 <!--end::Table-->
                                 <div style="margin-top:10px;" class="row">
@@ -158,10 +150,10 @@
                                     <button data-toggle="modal" data-target="#allcategories" class="btn btn-sm btn-primary">All Categories</button>
                                 </div>
                             </div>
-                            
+
                             <!--end::Header-->
                             <!--begin::Form-->
-                            
+
                             <form enctype="multipart/form-data" class="form" method="POST" action="{{ url('admin/videos/create') }}">
                                 <!--begin::Body-->
                                 @csrf
@@ -204,8 +196,8 @@
                                         </div>
                                         <div class="col-md-12">
                                             <button type="submit" class="btn btn-primary mr-2">Upload Video</button>
-                                        </div>                                                        
-                                    </div>  
+                                        </div>
+                                    </div>
                                 </div>
                                 <!--end::Body-->
                             </form>
@@ -244,7 +236,7 @@
         </div>
         <div class="col-md-12">
             <button type="submit" class="btn btn-primary mr-2">Add New Category</button>
-        </div>                                                        
+        </div>
     </div>
     </form>
     <br>
@@ -254,7 +246,7 @@
         <td>{{ $r->name }}</td>
         <td class="text-right pr-0">
             <a data-toggle="modal" data-target="#updateModalcate{{ $r->id }}" href="javascript:;" class="btn btn-sm btn-clean btn-icon" title="Edit details">
-                 <i class="la la-edit"></i> 
+                 <i class="la la-edit"></i>
             </a>
             <a data-toggle="modal" data-target="#deleteModalcate{{ $r->id }}" href="javascript:;" class="btn btn-sm btn-clean btn-icon" title="Delete">
                 <i class="la la-trash"></i>
@@ -323,6 +315,34 @@
 </div>
 </div>
 
-
-
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <form method="POST" action="{{ url('admin/videos/delete') }}">
+        @csrf
+    <input type="hidden" id="deleteid" name="id">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Are you Sure you want to Delete this?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you Sure you want to Delete this Video?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-danger font-weight-bold">Yes, Delete it</button>
+            </div>
+        </div>
+    </div>
+    </form>
+</div>
+<script>
+    function showdeletemodal(id)
+    {
+        $('#deleteid').val(id);
+        $('#deleteModal').modal('show');
+    }
+</script>
 @endsection

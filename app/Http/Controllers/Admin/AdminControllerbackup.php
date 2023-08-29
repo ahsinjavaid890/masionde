@@ -23,6 +23,9 @@ use App\Models\answers;
 use App\Models\user_notifications;
 use App\Models\userquizes;
 
+
+
+
 class AdminController extends Controller
 {
     function formatBytes($bytes) {
@@ -42,34 +45,34 @@ class AdminController extends Controller
     {
         if($request->tablename = 'slideshow_categories')
         {
-            $add = new slideshow_categories;    
+            $add = new slideshow_categories;
         }else{
             $add = new video_categories;
         }
-        
+
         $add->name = $request->name;
         $add->url = Cmf::shorten_url($request->name);
         $add->save();
-        return redirect()->back()->with('message', 'Category Added Successfully');   
+        return redirect()->back()->with('message', 'Category Added Successfully');
     }
     public function updatecategory(Request $request)
     {
         if($request->tablename = 'slideshow_categories')
         {
-            $add = slideshow_categories::find($request->id);    
+            $add = slideshow_categories::find($request->id);
         }
         if($request->tablename = 'video_categories'){
             $add = video_categories::find($request->id);
         }
-        
+
         $add->name = $request->name;
         $add->url = Cmf::shorten_url($request->name);
         $add->save();
-        return redirect()->back()->with('message', 'Category Updated Successfully');   
+        return redirect()->back()->with('message', 'Category Updated Successfully');
     }
-    
+
     public function deletecategory(Request $request)
-    {   
+    {
         if($request->tablename = 'slideshow_categories')
         {
             slideshows::where('category_id' , $request->id)->delete();
@@ -78,7 +81,7 @@ class AdminController extends Controller
            videos::where('category_id' , $request->id)->delete();
            video_categories::where('id' , $request->id)->delete();
         }
-        
+
         return redirect()->back()->with('message', 'Category Deleted Successfully');
     }
     public function allvideos()
@@ -132,7 +135,7 @@ class AdminController extends Controller
         return redirect()->back()->with('message', 'Video Updated Successfully');
     }
     public function searchvideo(Request $request)
-    {    
+    {
         $data = videos::Where('name', 'like', '%' . $request->keyword . '%')->paginate(100);
         return view('admin.videos.all')->with(array('data' => $data));
     }
@@ -308,7 +311,7 @@ class AdminController extends Controller
         return redirect()->back()->with('message', 'Video Updated Successfully');
     }
     public function searchslideshow(Request $request)
-    {    
+    {
         $data = slideshows::Where('name', 'like', '%' . $request->keyword . '%')->paginate(100);
         return view('admin.slideshows.all')->with(array('data' => $data));
     }
@@ -332,7 +335,7 @@ class AdminController extends Controller
     }
     public function addnewquiz()
     {
-        return view('admin.quizzes.add');   
+        return view('admin.quizzes.add');
     }
 
     public function createquiz(Request $request)
@@ -440,4 +443,9 @@ class AdminController extends Controller
         $data = quizzes::find($id);
         return view('admin.quizzes.viewquiz')->with(array('data' => $data));
     }
+
+    public function multipledelete(){
+
+    }
+
 }

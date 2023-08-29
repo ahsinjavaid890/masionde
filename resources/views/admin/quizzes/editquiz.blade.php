@@ -1,11 +1,11 @@
 @extends('admin.layouts.main-layout')
-@section('title','Update User')
+@section('title','Update Quizz')
 @section('adminbeardcumb')
 <li class="breadcrumb-item">
-    <a href="{{ url('admin/users') }}" class="text-muted">All Users</a>
+    <a href="{{ url('admin/quizzes') }}" class="text-muted">All Quizzes</a>
 </li>
 <li class="breadcrumb-item">
-    <a href="{{ url('admin/users') }}" class="text-muted">Edit User : {{ $data->name }}</a>
+    <a href="{{ url('admin/quizzes') }}" class="text-muted">Edit quizz : {{ $data->name }}</a>
 </li>
 @endsection
 @section('content')
@@ -16,15 +16,15 @@
         <!--begin::Container-->
         <div class="container">
            @include('alerts.index')
-           <form method="post" action="{{ url('admin/users/edituser') }}" enctype="multipart/form-data">
+           <form enctype="multipart/form-data" method="POST" action="{{ url('admin/quizzes/updatequiz') }}">
             @csrf
             <input type="hidden" name="id" value="{{ $data->id }}">
             <div class="card card-custom mt-5">
                 <div class="card-header flex-wrap py-5">
                     <div class="card-title">
                         <h3 class="card-label">
-                            Update User
-                            <div class="text-muted pt-2 font-size-sm">Update Agent</div>
+                            Update Quizz
+                            <div class="text-muted pt-2 font-size-sm">Update quizze</div>
                         </h3>
                     </div>
                 </div>
@@ -34,14 +34,14 @@
                             <div class="form-group">
                                 <label class="lable-control">Quiz
                                     Title</label>
-                                <input value="{{ $r->name }}" required type="text" class="form-control form-control-md form-control-solid" name="name">
+                                <input value="{{ $data->name }}" required type="text" class="form-control form-control-md form-control-solid" name="name">
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label class="lable-control">Short
                                     Description</label>
-                                <textarea name="short_description" class="form-control form-control-md form-control-solid" rows="3">{{ $r->short_description }}</textarea>
+                                <textarea name="short_description" class="form-control form-control-md form-control-solid" rows="3">{{ $data->short_description }}</textarea>
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -55,7 +55,7 @@
                             <div class="form-group">
                                 <label class="lable-control">Quiz Duration
                                     (mins)</label>
-                                <input required type="number" value="{{ $r->duration }}" class="form-control form-control-md form-control-solid" name="duration">
+                                <input required type="number" value="{{ $data->duration }}" class="form-control form-control-md form-control-solid" name="duration">
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -63,14 +63,16 @@
                                 <label class="lable-control">Quiz
                                     Status</label>
                                 <select class="form-control" name="status">
-                                    <option @if ($r->status == 'In Active') selected @endif
+                                    <option @if ($data->status == 'In Active') selected @endif
                                         value="In Active">In Active
                                     </option>
-                                    <option @if ($r->status == 'Active') selected @endif
+                                    <option @if ($data->status == 'Active') selected @endif
                                         value="Active">Active</option>
                                 </select>
                             </div>
                         </div>
+                    <div class="form-group">
+                        <input type="submit" value="Update Quizz" class="btn btn-primary" placeholder="Password">
                     </div>
                 </div>
             </div>

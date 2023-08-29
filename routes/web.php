@@ -8,8 +8,8 @@ use App\Http\Controllers\SiteController;
 use App\Http\Controllers\StaffPermissionController;
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\AuthUserController;
-use App\Http\Controllers\GoogleController; 
-use App\Http\Controllers\CustomLoginController; 
+use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\CustomLoginController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,7 +26,7 @@ Route::get('/home',[HomeController::class, 'dashboard'])->name('home');
 Route::get('/home',[HomeController::class, 'dashboard'])->name('userprofile');
 
 Route::get('forget-password', [AuthUserController::class, 'showForgetPasswordForm'])->name('forget.password.get');
-Route::post('forget-password', [AuthUserController::class, 'submitForgetPasswordForm'])->name('forget.password.post'); 
+Route::post('forget-password', [AuthUserController::class, 'submitForgetPasswordForm'])->name('forget.password.post');
 Route::get('reset-password/{token}', [AuthUserController::class, 'showResetPasswordForm'])->name('reset.password.get');
 Route::post('reset-password', [AuthUserController::class, 'submitResetPasswordForm'])->name('reset.password.post');
 
@@ -39,7 +39,7 @@ Route::name('user.')->prefix('')->group(function(){
     Route::POST('/updateuserprofile', [HomeController::class, 'updateuserprofile']);
     Route::get('/securitysettings',[HomeController::class, 'securitysettings'])->name('securitysettings');
     Route::POST('/updateusersecurity', [HomeController::class, 'updateusersecurity']);
-    
+
     Route::get('/video/{id}',[HomeController::class, 'videodetail']);
     Route::get('/category/{id}',[HomeController::class, 'categorydetail']);
     Route::get('/slideshows',[HomeController::class, 'slideshows'])->name('slideshows');
@@ -52,7 +52,7 @@ Route::name('user.')->prefix('')->group(function(){
 
 
     Route::get('/search',[HomeController::class, 'search']);
-    
+
 });
 Route::POST('/userlogin', [AuthUserController::class, 'login'])->name('user.login');
 
@@ -95,7 +95,10 @@ Route::name('admin.')->prefix('admin')->namespace('App\Http\Controllers\Admin')-
         Route::post('/createcategory','AdminController@createcategory');
         Route::post('/deletecategory','AdminController@deletecategory');
         Route::post('/updatecategory','AdminController@updatecategory');
-        
+        Route::post('/multipledelete','AdminController@multipledelete');
+        Route::post('/multipledeleteSlide','AdminController@multipledeleteSlide');
+
+
     });
 
 
@@ -107,6 +110,8 @@ Route::name('admin.')->prefix('admin')->namespace('App\Http\Controllers\Admin')-
         Route::get('/edit/{id}','AdminController@editslideshow');
         Route::post('/update','AdminController@updateslideshow');
         Route::get('/search','AdminController@searchslideshow');
+        Route::post('/multipledeleteSlide','AdminController@multipledeleteSlide');
+
     });
 
 
@@ -125,7 +130,8 @@ Route::name('admin.')->prefix('admin')->namespace('App\Http\Controllers\Admin')-
         Route::get('/addanswer/{id}','AdminController@addanswer');
         Route::get('/saveanswer/{value}/{id}/{questionid}','AdminController@saveanswer');
         Route::get('/removeoption/{value}/{id}','AdminController@removeoption');
-
+        Route::get('/editquiz/{id}','AdminController@editquiz');
         Route::post('/deletequestion','AdminController@deletequestion');
+        Route::post('/multipledeleteQuizzes','AdminController@multipledeleteQuizzes');
     });
 });

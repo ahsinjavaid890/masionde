@@ -184,7 +184,7 @@ class AdminController extends Controller
         $update->phonenumber = $request->phonenumber;
         $update->about_me = $request->about_me;
         $update->status = $request->status;
-        if($request->password) 
+        if($request->password)
         {
             $update->password = Hash::make($request->password);
         }
@@ -561,5 +561,41 @@ class AdminController extends Controller
     {
         answers::where('id', $id)->delete();
         return redirect()->back()->with('message', "Answer Deleted Successfully");
+    }
+    function multipledelete(Request $request){
+        foreach($request->delteid as $r)
+        {
+            mywatchvideos::where('video_id' , $r)->delete();
+            videos::where('id', $r)->delete();
+        }
+        return redirect()->back()->with('message', 'Video Deleted Successfully');
+    }
+    function multipledeleteSlide(Request $request){
+        foreach($request->delteid as $r)
+        {
+
+            slideshows::where('id', $r)->delete();
+
+        }
+        return redirect()->back()->with('message', 'Slides Deleted Successfully');
+    }
+    function multipledeleteQuizzes(Request $request){
+
+        foreach($request->delteid as $q)
+        {
+            $question = questions::where('quiz_id', $q)->get();
+            foreach ($question as $r) {
+                answers::where('question_id', $r->id)->delete();
+            }
+            questions::where('quiz_id', $q)->delete();
+            userquizes::where('quiz_id', $q)->delete();
+            quizzes::where('id', $q)->delete();
+        }
+        return redirect()->back()->with('message', 'QUIZZESS Deleted Successfully');
+    }
+    function editquiz($id)
+    {
+        $data = quizzes::find($id);
+        return view('admin.quizzes.editquiz')->with(array('data' => $data));
     }
 }

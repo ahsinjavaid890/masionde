@@ -36,6 +36,22 @@
                             <!--begin::Body-->
                             <div class="card-body py-0 mt-n3">
                                 <!--begin::Table-->
+
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="multipleDeleteSlide()">Delete Multiple</button>
+                                <script>
+                                    function multipleDeleteSlide()
+                                    {
+                                        var checked = $("input:checked").length > 0;
+                                        if (!checked){
+                                            alert("Please check at least one checkbox");
+                                            return false;
+                                        }else{
+                                            $('#multipleDeleteSlide').submit();
+                                        }
+
+                                    }
+                                </script>
+
                                 <div class="table-responsive">
                                     <table class="table table-borderless">
                                         <thead>
@@ -49,8 +65,17 @@
                                         </thead>
                                         <tbody>
                                             @if($data->count() > 0)
+                                            <form method="POST" id="multipleDeleteSlide"  action="{{ url('admin/slideshows/multipledeleteSlide') }}">
+                                                @csrf
                                             @foreach($data as $r)
                                             <tr>
+                                                <td class="datatable-cell-center datatable-cell datatable-cell-check">
+                                                    <span style="width: 20px;">
+                                                        <label style="margin-top:20px;" class="checkbox checkbox-single">
+                                                            <input type="checkbox" name="delteid[]" value="{{ $r->id }}">&nbsp;<span></span>
+                                                        </label>
+                                                    </span>
+                                                </td>
                                                 <td class="pl-0">
                                                     <div class="symbol symbol-50 symbol-fixed mr-2 mt-2">
                                                         @if($r->image)
@@ -64,7 +89,7 @@
                                                     <a href="#" class="text-dark font-weight-bolder text-hover-primary mb-1 font-size-lg">{{ $r->name }}</a>
                                                     <span class="text-muted font-weight-bold d-block">Size: {{ $r->filesize }}</span>
                                                 </td>
-                                                
+
                                                 <td class="text-right">
                                                     <span class="text-muted font-weight-bold d-block">
                                                         Uploaded on
@@ -83,37 +108,16 @@
                                                 </td>
                                                 <td class="text-right pr-0">
                                                     <a href="{{ url('admin/slideshows/edit') }}/{{ $r->id }}" class="btn btn-sm btn-clean btn-icon" title="Edit details">
-                                                         <i class="la la-edit"></i> 
+                                                         <i class="la la-edit"></i>
                                                     </a>
-                                                    <a data-toggle="modal" data-target="#deleteModal{{ $r->id }}" href="javascript:;" class="btn btn-sm btn-clean btn-icon" title="Delete">
+                                                    <a onclick="showdeletemodal({{ $r->id }})" href="javascript:;" class="btn btn-sm btn-clean btn-icon" title="Delete">
                                                         <i class="la la-trash"></i>
                                                     </a>
                                                 </td>
                                             </tr>
-                                            <div class="modal fade" id="deleteModal{{ $r->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <form method="POST" action="{{ url('admin/slideshows/delete') }}">
-                                                    @csrf
-                                                <input type="hidden" value="{{ $r->id }}" name="id">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Are you Sure you want to Delete this?</h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <i aria-hidden="true" class="ki ki-close"></i>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            Are you Sure you want to Delete this slide Show?
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Cancel</button>
-                                                            <button type="submit" class="btn btn-danger font-weight-bold">Yes, Delete it</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                </form>
-                                            </div>
+
                                             @endforeach
+                                        </form>
                                             @else
 
                                                 <div class="text-center mt-5" style="font-size:22px">No Slideshows Found</div>
@@ -121,7 +125,7 @@
                                             @endif
                                         </tbody>
                                     </table>
-                                    
+
                                 </div>
                                 <!--end::Table-->
                                 <div style="margin-top:10px;" class="row">
@@ -146,7 +150,7 @@
                             </div>
                             <!--end::Header-->
                             <!--begin::Form-->
-                            
+
                             <form enctype="multipart/form-data" class="form" method="POST" action="{{ url('admin/slideshows/create') }}">
                                 <!--begin::Body-->
                                 @csrf
@@ -189,8 +193,8 @@
                                         </div>
                                         <div class="col-md-12">
                                             <button type="submit" class="btn btn-primary mr-2">Save Changes</button>
-                                        </div>                                                        
-                                    </div>  
+                                        </div>
+                                    </div>
                                 </div>
                                 <!--end::Body-->
                             </form>
@@ -229,7 +233,7 @@
         </div>
         <div class="col-md-12">
             <button type="submit" class="btn btn-primary mr-2">Add New Category</button>
-        </div>                                                        
+        </div>
     </div>
     </form>
     <br>
@@ -239,7 +243,7 @@
         <td>{{ $r->name }}</td>
         <td class="text-right pr-0">
             <a data-toggle="modal" data-target="#updateModalcate{{ $r->id }}" href="javascript:;" class="btn btn-sm btn-clean btn-icon" title="Edit details">
-                 <i class="la la-edit"></i> 
+                 <i class="la la-edit"></i>
             </a>
             <a data-toggle="modal" data-target="#deleteModalcate{{ $r->id }}" href="javascript:;" class="btn btn-sm btn-clean btn-icon" title="Delete">
                 <i class="la la-trash"></i>
@@ -307,4 +311,35 @@
     </div>
 </div>
 </div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <form method="POST" action="{{ url('admin/slideshows/delete') }}">
+        @csrf
+    <input type="hidden" id="deleteid" value="{{ $r->id }}" name="id">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Are you Sure you want to Delete this?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you Sure you want to Delete this slide Show?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-danger font-weight-bold">Yes, Delete it</button>
+            </div>
+        </div>
+    </div>
+    </form>
+</div>
+<script>
+    function showdeletemodal(id)
+    {
+        $('#deleteid').val(id);
+        $('#deleteModal').modal('show');
+    }
+</script>
 @endsection
