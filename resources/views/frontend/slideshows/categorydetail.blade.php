@@ -1,6 +1,6 @@
 @extends('frontend.layouts.main')
 @section('tittle')
-<title>Slideshows</title>
+<title>{{ $category->name }}</title>
 @endsection
 @section('content')
 <section class="video-sec">

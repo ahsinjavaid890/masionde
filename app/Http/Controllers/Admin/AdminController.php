@@ -341,7 +341,7 @@ class AdminController extends Controller
         if ($request->image) {
             $add->image = Cmf::sendimagetodirectory($request->image);
         }
-        $add->duration = $request->duration;
+        // $add->duration = $request->duration;
         $add->short_description = $request->short_description;
         $add->url = Cmf::shorten_url($request->name);
         $add->status = 'In Active';
@@ -357,7 +357,7 @@ class AdminController extends Controller
         if ($request->image) {
             $add->image = Cmf::sendimagetodirectory($request->image);
         }
-        $add->duration = $request->duration;
+        // $add->duration = $request->duration;
         $add->short_description = $request->short_description;
         $add->url = Cmf::shorten_url($request->name);
         $add->status = $request->status;

@@ -59,7 +59,7 @@
                                             @if($r->profileimage)
                                             <img src="{{ url('public/images') }}/{{ $r->profileimage }}" alt="{{ $r->name }}">
                                             @else
-                                            <img src="{{ url('https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930') }}" alt="photo">
+                                            <img src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930" alt="photo">
                                             @endif
                                         </div>
                                         <div class="ml-3">

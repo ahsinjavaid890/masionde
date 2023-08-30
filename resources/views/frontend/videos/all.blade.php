@@ -1,6 +1,6 @@
 @extends('frontend.layouts.main')
 @section('tittle')
-<title>Dashboard</title>
+<title>All Videos</title>
 @endsection
 @section('content')
 <section class="video-sec">
@@ -33,9 +33,11 @@
       <div class="col-md-3 col-12">
         <div class="video-cards">
           <a href="{{ url('video') }}/{{ $r->url }}">
-            <video style="width: 100%;">
-              <source src="{{ url('public/images') }}/{{ $r->video }}" type="video/mp4" />
-            </video>
+            @if($r->image)
+            <img style="width: 100%;" src="{{ url('public/images') }}/{{ $r->image }}">
+            @else
+            <img style="width: 100%;" src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930">
+            @endif
             <h2>{{ $r->name }}</h2>
             @if($r->duration)
             <span><i class="fa fa-clock-o" aria-hidden="true"></i> {{ $r->duration }} Sec</span>

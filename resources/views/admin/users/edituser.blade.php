@@ -1,11 +1,8 @@
 @extends('admin.layouts.main-layout')
-@section('title','Update User')
+@section('title','Update Agent')
 @section('adminbeardcumb')
 <li class="breadcrumb-item">
     <a href="{{ url('admin/users') }}" class="text-muted">All Users</a>
-</li>
-<li class="breadcrumb-item">
-    <a href="{{ url('admin/users') }}" class="text-muted">Edit User : {{ $data->name }}</a>
 </li>
 @endsection
 @section('content')
@@ -23,59 +20,53 @@
                 <div class="card-header flex-wrap py-5">
                     <div class="card-title">
                         <h3 class="card-label">
-                            Update User
+                            Update Agent
                             <div class="text-muted pt-2 font-size-sm">Update Agent</div>
                         </h3>
                     </div>
                 </div>
                 <div class="card-body">
-                	<div class="row">
-                        <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Select Status</label>
+                        <select required name="status" class="form-control">
+                            <option value="">Select Status</option>
+                            <option value="active" @if($data->status == 'active') selected @endif>Active</option>
+                            <option value="inactive" @if($data->status == 'inactive') selected @endif>In Active</option>
+                        </select>
+                    </div>
+                     <div class="row">
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <label class="lable-control">Quiz
-                                    Title</label>
-                                <input value="{{ $r->name }}" required type="text" class="form-control form-control-md form-control-solid" name="name">
+                                <label>Name</label>
+                                <input required value="{{  $data->name }}" type="text" name="name" class="form-control" placeholder="Name">
                             </div>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <label class="lable-control">Short
-                                    Description</label>
-                                <textarea name="short_description" class="form-control form-control-md form-control-solid" rows="3">{{ $r->short_description }}</textarea>
+                                <label>Profile Image</label>
+                                <input type="file" name="image" class="form-control" placeholder="Name">
                             </div>
                         </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label class="lable-control">Banner
-                                    Image</label>
-                                <input type="file" accept=".png,.jpg,.jpeg,.webp" class="form-control form-control-md form-control-solid" name="image">
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label class="lable-control">Quiz Duration
-                                    (mins)</label>
-                                <input required type="number" value="{{ $r->duration }}" class="form-control form-control-md form-control-solid" name="duration">
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label class="lable-control">Quiz
-                                    Status</label>
-                                <select class="form-control" name="status">
-                                    <option @if ($r->status == 'In Active') selected @endif
-                                        value="In Active">In Active
-                                    </option>
-                                    <option @if ($r->status == 'Active') selected @endif
-                                        value="Active">Active</option>
-                                </select>
-                            </div>
-                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input required value="{{  $data->email }}" type="email" name="email" class="form-control" placeholder="Email Address">
+                    </div>
+                    <div class="form-group">
+                        <label>Little About Me</label>
+                        <textarea class="form-control" name="about_me" rows="3" placeholder="Write Something About You.....">{{  $data->name }}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Account Password</label>
+                        <input  type="password" name="password" class="form-control" placeholder="Password">
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Update User" class="btn btn-primary">
                     </div>
                 </div>
             </div>
             </form>
-
+                        
         </div>
         <!--end::Container-->
     </div>

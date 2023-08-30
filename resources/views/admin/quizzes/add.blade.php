@@ -50,12 +50,12 @@
                                         <input type="file" accept=".png,.jpg,.jpeg,.webp" class="form-control form-control-md form-control-solid" name="image">
                                     </div>
                                 </div>
-                                <div class="col-md-12">
+                                <!-- <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="lable-control">Quiz Duration (mins)</label>
                                         <input required type="number" class="form-control form-control-md form-control-solid" name="duration">
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <input value="Next" type="submit" class="btn btn-primary">

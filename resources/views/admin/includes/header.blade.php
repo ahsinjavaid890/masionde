@@ -50,7 +50,12 @@
                     <div class="d-flex align-items-center p-8 rounded-top">
                         <!--begin::Symbol-->
                         <div class="symbol symbol-md bg-light-primary mr-3 flex-shrink-0">
-                            <img src="{{asset('public/admin/assets/media/users/300_21.jpg')}}" alt="" />
+                            @if(Auth::user()->profileimage)
+                                <img src="{{ url('public/images') }}/{{ Auth::user()->profileimage }}" alt="" />
+                            @else
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930" alt="" />
+                            @endif
+                            
                         </div>
                         <!--end::Symbol-->
                         <!--begin::Text-->
