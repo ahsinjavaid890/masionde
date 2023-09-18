@@ -7,9 +7,7 @@
    <div class="container">
      <div class="main-outer video-outer">
        <div class="left-video">
-         <video controls>
-          <source src="{{ url('public/images') }}/{{ $data->video }}" type="video/mp4" />
-        </video>
+        <iframe width="100%" height="315"src="{{ $data->video }}"></iframe>
        </div>
        <div class="video-right-details">
          <h6>{{ DB::table('video_categories')->where('id' , $data->category_id)->first()->name }}</h6>

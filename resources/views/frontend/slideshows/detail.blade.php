@@ -7,7 +7,20 @@
   <div class="container">
     <div class="main-outer video-outer">
       <div class="left-video">
+
+        @php
+          $infoPath = pathinfo(url('public/images').'/'.$data->video);
+          $extension = $infoPath['extension'];
+        @endphp
+
+          @if($extension == 'pptx')
           <embed src="https://view.officeapps.live.com/op/view.aspx?src={{ url('public/images') }}/{{ $data->video }}#toolbar=0" style="width:100%; height:500px;">
+          @endif
+
+          @if($extension == 'pdf')
+          <embed src="{{ url('public/images') }}/{{ $data->video }}" type="application/pdf" width="100%" height="600px" />
+          @endif
+
       </div>
       <div class="video-right-details">
         <a href="{{ url('slidecategory') }}/{{ DB::table('slideshow_categories')->where('id' , $data->category_id)->first()->url }}" style="text-decoration: none;color: #212529;font-size: 22px;margin-bottom: 20px;">{{ DB::table('slideshow_categories')->where('id' , $data->category_id)->first()->name }}<br>

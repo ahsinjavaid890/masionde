@@ -234,8 +234,8 @@
                                         </div>
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label class="lable-control">Upload File (Pptx)</label>
-                                                <input accept=".ppt, .pptx" type="file" class="form-control form-control-md form-control-solid" name="video">
+                                                <label class="lable-control">Upload File (pptx , ppt , pdf)</label>
+                                                <input accept=".ppt, .pptx , .pdf" type="file" class="form-control form-control-md form-control-solid" name="video">
                                             </div>
                                         </div>
                                         <div class="col-md-12">

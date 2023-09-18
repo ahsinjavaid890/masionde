@@ -89,17 +89,14 @@ class AdminController extends Controller
     }
     public function createvideo(Request $request)
     {
-        $getID3 = new \getID3;
-        $file = $getID3->analyze($_FILES["video"]["tmp_name"]);
-        $filesize = $request->file('video')->getSize();
         $create  = new videos;
         $create->name = $request->name;
         $create->category_id = $request->category_id;
         $create->url = Cmf::shorten_url($request->name);
         $create->short_description = $request->short_description;
-        $create->video = Cmf::sendimagetodirectory($request->video);
-        $create->filesize = $this->formatBytes($filesize);
-        $create->duration = $file['playtime_string'];
+        $create->video = $request->video;
+        $create->filesize = '';
+        $create->duration = '';
         if ($request->image) {
             $create->image = Cmf::sendimagetodirectory($request->image);
         }
@@ -114,15 +111,9 @@ class AdminController extends Controller
         $create->category_id = $request->category_id;
         $create->url = Cmf::shorten_url($request->name);
         $create->short_description = $request->short_description;
-        if ($request->video) {
-
-            $getID3 = new \getID3;
-            $file = $getID3->analyze($_FILES["video"]["tmp_name"]);
-            $filesize = $request->file('video')->getSize();
-            $create->video = Cmf::sendimagetodirectory($request->video);
-            $create->filesize = $this->formatBytes($filesize);
-            $create->duration = $file['playtime_string'];
-        }
+        $create->video = $request->video;
+        $create->filesize = '';
+        $create->duration = '';
         if ($request->image) {
             $create->image = Cmf::sendimagetodirectory($request->image);
         }

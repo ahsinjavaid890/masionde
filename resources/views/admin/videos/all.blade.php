@@ -184,8 +184,8 @@
                                         </div>
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label class="lable-control">Upload File (mp4)</label>
-                                                <input accept=".mp4" type="file" required class="form-control form-control-md form-control-solid" name="video">
+                                                <label class="lable-control">Youtube Link</label>
+                                                <input type="text" required class="form-control form-control-md form-control-solid" name="video">
                                             </div>
                                         </div>
                                         <div class="col-md-12">
